@@ -55,7 +55,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "TODO"
+    "url": "https://github.com/jpuri/react-range-slider.git"
   },
   "scripts": {
     "clean": "rimraf lib",
