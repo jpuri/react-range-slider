@@ -1,7 +1,7 @@
 # React Range Slider
 
 An elegant range slider component for React.
-[Demo Page](https://jqueryui.com/slider/).
+[Demo Page](http://jpuri.github.io/react-range-slider/).
 
 ## Installing
 
