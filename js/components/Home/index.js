@@ -60,7 +60,7 @@ export default class Home extends Component {
           <h1>Demo page for React Range Slider</h1>
           <div>
             <iframe
-              src="https://ghbtns.com/github-btn.html?user=jpuri&repo=react-component-stores&type=star&count=true&size=large"
+              src="https://ghbtns.com/github-btn.html?user=jpuri&repo=react-range-slider&type=star&count=true&size=large"
               frameBorder="0"
               scrolling="0"
               className={styles.gitLink}
