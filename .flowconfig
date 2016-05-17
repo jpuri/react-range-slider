@@ -1,0 +1,17 @@
+[ignore]
+.*node_modules/fbjs.*
+.*/test/*
+
+[include]
+.*/js/*
+
+[libs]
+./interfaces/mocha.js
+./interfaces/CSSModule.js
+./interfaces/react-range-input.js
+
+[options]
+esproposal.class_static_fields=enable
+esproposal.class_instance_fields=enable
+module.name_mapper='^.*.css' -> 'CSSModule'
+module.system=haste
