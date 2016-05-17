@@ -1,6 +1,6 @@
 {
   "name": "rr-slider",
-  "version": "0.0.5",
+  "version": "1.0.0",
   "description": "A range slider component for React.",
   "peerDependencies": {
     "react": "^15.0.1",
