@@ -15,3 +15,9 @@ const routes = (
 );
 
 module.exports = routes;
+
+
+/**
+Use  this line to generate gh-pages:
+<Route path="/react-range-slider/" component={App}>
+**/
