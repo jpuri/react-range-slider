@@ -11,7 +11,7 @@ module.exports = {
   ],
   output: {
     path: path.join(__dirname, '../lib'),
-    filename: 'RRSlider.js',
+    filename: 'index.js',
     libraryTarget: 'commonjs2',
   },
   plugins: [
@@ -21,7 +21,7 @@ module.exports = {
         'NODE_ENV': JSON.stringify('production')
       }
     }),
-    new ExtractTextPlugin('RRSlider.css', {
+    new ExtractTextPlugin('ReactRangeSlider.css', {
       allChunks: true
     }),
     new webpack.optimize.UglifyJsPlugin({

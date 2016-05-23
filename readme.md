@@ -7,7 +7,7 @@ An elegant range slider component for React.
 
 The library is available as npm package.
 
-`npm install rr-slider`
+`npm install reactrangeslider`
 
 ## Using The component
 The component is easy to use. A simple use can be when no properties are provided to the component, it takes default value of props:
@@ -15,14 +15,14 @@ The component is easy to use. A simple use can be when no properties are provide
 ```
 import React from 'react';
 import styles from './styles.css';
-import RangeSlider from 'r-slider';
+import RangeSlider from 'reactrangeslider';
 
 const MyPage = () =>its used to initialize
   <div className={ styles.container }>
     <RangeSlider />
   </div>;
 ```
-IMPORTANT: Please make sure that you include styles from `RRSlider.css`. The file is available in /lib folder in the repository and also part of npm package.
+IMPORTANT: Please make sure that you include styles from `ReactRangeSlider.css`. The file is available in /lib folder in the repository and also part of npm package.
 In case you are using webpack for build, please make sure that you do **not** use ExtractTextPlugin to load this css file.
 
 ![Small cart in header](http://i.imgur.com/r7Ot84g.gif)
@@ -31,7 +31,7 @@ An example passing the range of values and step to the component:
 ```
 import React from 'react';
 import styles from './styles.css';
-import RangeSlider from 'r-slider';
+import RangeSlider from 'reactrangeslider';
 
 const MyPage = () =>
   <div className={ styles.container }>
@@ -43,7 +43,7 @@ More advanced example of a controlled range slider component:
 ```
 import React from 'react';
 import styles from './styles.css';
-import RangeSlider from 'r-slider';
+import RangeSlider from 'reactrangeslider';
 
 const MyPage = (value, onChange) =>
   <div className={ styles.container }>
