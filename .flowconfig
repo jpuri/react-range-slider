@@ -8,7 +8,7 @@
 [libs]
 ./interfaces/mocha.js
 ./interfaces/CSSModule.js
-./interfaces/react-range-input.js
+./interfaces/react-range-slider.js
 
 [options]
 esproposal.class_static_fields=enable

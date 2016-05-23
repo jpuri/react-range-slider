@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import styles from './styles.css';
-import { RangeSlider } from 'rr-slider'; // eslint-disable-line import/no-unresolved
+import { RangeSlider } from 'reactrangeslider'; // eslint-disable-line import/no-unresolved
 
 export default class Home extends Component {
 
