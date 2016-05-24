@@ -53,29 +53,29 @@
   box-shadow: inset 0px 0px 5px 0px #ff99cc;
 }
 .secondTrack {
-  background-color: white !important;
-  border: 1px solid #37FDFC !important;
+  background-color: white;
+  border: 1px solid #37FDFC;
 }
 .secondHighlightedTrack {
-  background-color: #37FDFC !important;
-  border: 1px solid #37FDFC !important;
+  background-color: #37FDFC;
+  border: 1px solid #37FDFC;
 }
 .secondHandle {
-  background-color: white !important;
-  border: 1px solid #37FDFC !important;
+  background-color: white;
+  border: 1px solid #37FDFC;
   border-radius: 20%;
   width: 30px;
   height: 30px;
 }
 .secondHandle:focus {
-  background-color: white !important;
-  border: 1px solid #00CDCD !important;
+  background-color: white;
+  border: 1px solid #00CDCD;
 }
 .secondHandle:hover {
-  box-shadow: 0px 0px 7px 0px #37FDFC !important;
+  box-shadow: 0px 0px 7px 0px #37FDFC;
 }
 .secondHandle:active {
-  box-shadow: inset 0px 0px 7px 0px #37FDFC !important;
+  box-shadow: inset 0px 0px 7px 0px #37FDFC;
 }
 .inputSection {
   margin-bottom: 10px;
