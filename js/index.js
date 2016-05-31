@@ -2,7 +2,7 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, IndexRoute, Route, hashHistory } from 'react-router';
+import { Router, IndexRoute, Route, browserHistory } from 'react-router';
 import {
     App,
     Home,
@@ -11,7 +11,7 @@ import {
 // Following import is to copy normalize.css to destination folder
 import styles from '../css/normalize.css'; // eslint-disable-line no-unused-vars
 
-ReactDOM.render(<Router history={hashHistory}>
+ReactDOM.render(<Router history={browserHistory}>
   <Route path="/" component={App}>
     <Route path="slider" component={SliderPage} />
     <IndexRoute component={Home} />
