@@ -6,10 +6,12 @@ import { Route, IndexRoute } from 'react-router';
 import {
     App,
     Home,
+    Slider,
 } from './components';
 
 const routes = (
   <Route path="/" component={App}>
+    <Route path="slider" component={Slider} />
     <IndexRoute component={Home} />
   </Route>
 );
