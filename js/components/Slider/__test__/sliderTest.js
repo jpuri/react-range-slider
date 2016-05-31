@@ -1,15 +1,15 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow, mount } from 'enzyme';
-import RangeSlider from '../index';
+import Slider from '../index';
 
-describe('rangeSlider test suite', () => {
+describe('Slider test suite', () => {
   it('should have a div when rendered', () => {
-    expect(shallow(<RangeSlider />).node.type).to.equal('div');
+    expect(shallow(<Slider />).node.type).to.equal('div');
   });
 
   it('should set the default props correctly', () => {
-    const node = mount(<RangeSlider />);
+    const node = mount(<Slider />);
     expect(node.props().min).to.equal(0);
     expect(node.props().max).to.equal(100);
     expect(node.props().step).to.equal(1);
@@ -18,9 +18,9 @@ describe('rangeSlider test suite', () => {
   });
 
   it('should have 5 child nodes when disabled', () => {
-    const rangeSlider = mount(<RangeSlider max={10} min={2} />);
-    expect(rangeSlider.children().length).to.equal(4);
-    const disabledRangeSlider = mount(<RangeSlider max={10} min={2} disabled />);
-    expect(disabledRangeSlider.children().length).to.equal(5);
+    const slider = mount(<Slider max={10} min={2} />);
+    expect(slider.children().length).to.equal(2);
+    const disabledSlider = mount(<Slider max={10} min={2} disabled />);
+    expect(disabledSlider.children().length).to.equal(3);
   });
 });

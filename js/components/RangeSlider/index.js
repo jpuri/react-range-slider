@@ -8,11 +8,13 @@ import Gradient from '../Gradient';
 import styles from './styles.css';
 import {
   has,
-  valueValidator,
-  defaultValueValidator,
   stepValidator,
   getValueOrAlt,
-} from '../../utils';
+} from '../../utils/common';
+import {
+  valueValidator,
+  defaultValueValidator,
+} from '../../utils/rangeSlider';
 
 export default class RangeSlider extends Component {
 

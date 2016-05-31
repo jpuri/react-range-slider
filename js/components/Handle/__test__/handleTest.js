@@ -1,4 +1,5 @@
 import React from 'react';
+import { spy } from 'sinon';
 import { expect, assert } from 'chai';
 import { shallow, mount } from 'enzyme';
 import Handle from '../index';
@@ -15,7 +16,7 @@ describe('Handle test suite', () => {
       />).node.type).to.equal('div');
   });
 
-  it('should add className in props to the rendered div', () => {
+  xit('should add className in props to the rendered div', () => {
     assert.isTrue(getReactClassNames(mount(
       <Handle
         factor={1}
@@ -41,17 +42,14 @@ describe('Handle test suite', () => {
   });
 
   it('should execute function handleRef when component is mount', () => {
-    let test;
-    const handleRef = () => {
-      test = 'test123';
-    };
+    const handleRef = spy();
     mount(<Handle
       handleRef={handleRef}
       factor={1}
       handleMove={() => {}}
       afterChange={() => {}}
     />);
-    expect(test).to.equal('test123');
+    assert.isTrue(handleRef.calledOnce);
   });
 
   it('should add props values of left and right to the component styles', () => {

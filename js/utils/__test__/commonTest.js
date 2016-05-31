@@ -1,9 +1,9 @@
 /* @flow */
 
 import { assert } from 'chai';
-import { has } from '../index';
+import { has } from '../common';
 
-describe('Track test suite', () => {
+describe('CommonUtils test suite', () => {
   it('should return true when object has the property', () => {
     const obj = {
       value: 123,

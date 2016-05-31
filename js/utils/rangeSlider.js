@@ -1,8 +1,6 @@
 /* @flow */
 
-export function has(obj: any, key: any): bool {
-  return obj !== undefined && obj !== null && Object.prototype.hasOwnProperty.call(obj, key);
-}
+import { has } from './common';
 
 export function defaultValueValidator( // eslint-disable-line consistent-return
   props: Object,
@@ -39,29 +37,4 @@ export function valueValidator(props: Object, propName: string, componentName: s
     }
   }
   return defaultValueValidator(props, propName, componentName);
-}
-
-export function stepValidator( // eslint-disable-line consistent-return
-  props: Object,
-  propName: string,
-  componentName: string
-) {
-  if (has(props, propName)) {
-    if (isNaN(props.step) || props.step <= 0) {
-      return new Error(
-        `${componentName}: Step should be provided a positive numeric value.`
-      );
-    }
-  }
-}
-
-export function getValueOrAlt(value: any, altValue: any) {
-  if (value !== undefined && value !== null) {
-    return value;
-  }
-  return altValue;
-}
-
-export function isDefined(value: any) {
-  return value !== undefined && value !== null;
 }
