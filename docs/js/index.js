@@ -18,8 +18,6 @@ ReactDOM.render(<Router history={browserHistory}>
   </Route>
 </Router>, document.getElementById('app'));
 
-// todo: fix use browserHistory instead of hashHistory
-
 /**
 Use  this line to generate gh-pages:
 <Route path="/react-range-slider/" component={App}>

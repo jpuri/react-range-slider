@@ -28,7 +28,7 @@ describe('Handle test suite', () => {
       .indexOf('testClassName') > 0);
   });
 
-  it('should have false value for state variables hovered and active by default', () => {
+  it('should have false value for state variables hover and active by default', () => {
     const handle = mount(
       <Handle
         factor={1}
@@ -37,7 +37,7 @@ describe('Handle test suite', () => {
         afterChange={() => {}}
       />
     );
-    expect(handle.state().hovered).to.equal(false);
+    expect(handle.state().hover).to.equal(false);
     expect(handle.state().active).to.equal(false);
   });
 
@@ -56,7 +56,6 @@ describe('Handle test suite', () => {
     const handle = mount(
       <Handle
         left={10}
-        right={50}
         factor={1}
         handleRef={() => {}}
         handleMove={() => {}}
@@ -64,7 +63,6 @@ describe('Handle test suite', () => {
       />
     );
     expect(handle.node.style.left).to.equal(10);
-    expect(handle.node.style.right).to.equal(50);
   });
 
   it('should set state to active when mouse is down', () => {
@@ -99,7 +97,7 @@ describe('Handle test suite', () => {
     expect(handle.state().active).to.equal(true);
   });
 
-  it('should set state to hovered when mouse is above it', () => {
+  it('should set state to hover when mouse is above it', () => {
     const handle = mount(
       <Handle
         left={10}
@@ -110,10 +108,10 @@ describe('Handle test suite', () => {
         afterChange={() => {}}
       />
     );
-    expect(handle.state().hovered).to.equal(false);
+    expect(handle.state().hover).to.equal(false);
     handle.simulate('mouseEnter');
-    expect(handle.state().hovered).to.equal(true);
+    expect(handle.state().hover).to.equal(true);
     handle.simulate('mouseLeave');
-    expect(handle.state().hovered).to.equal(false);
+    expect(handle.state().hover).to.equal(false);
   });
 });

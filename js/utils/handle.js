@@ -19,9 +19,9 @@ export function removeStyle(): void {
 }
 
 export function calculateStyle(styles, state, props): Object {
-  const { hovered, focus, active } = state;
+  const { hover, focus, active } = state;
   const { left, style, hoverStyle, focusStyle, activeStyle } = props;
-  const calcHoverStyle = hovered
+  const calcHoverStyle = hover
     ? { ...styles.handleHover, ...hoverStyle }
     : undefined;
   const calcFocusStyle = focus

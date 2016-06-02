@@ -1,6 +1,7 @@
 /* @flow */
 
 import React, { Component, PropTypes } from 'react';
+import { notSimilar } from '../../utils/common';
 import styles from './styles';
 
 export default class HighlightedTrack extends Component {
@@ -13,9 +14,11 @@ export default class HighlightedTrack extends Component {
   };
 
   componentWillReceiveProps(properties: Object): void {
-    if (properties.left !== this.props.left ||
-      properties.width !== this.props.width ||
-      properties.style !== this.props.style) {
+    if (notSimilar(
+      properties,
+      this.props,
+      ['left', 'style', 'width']
+    )) {
       this.style = {
         ...styles.highlightedTrack,
         ...properties.style,

@@ -2,6 +2,7 @@
 
 import React, { Component, PropTypes } from 'react';
 import { injectStyle, removeStyle, calculateStyle } from '../../utils/handle';
+import { notSimilar } from '../../utils/common';
 import styles from './styles';
 
 export default class Handle extends Component {
@@ -22,7 +23,7 @@ export default class Handle extends Component {
   };
 
   state: Object = {
-    hovered: false,
+    hover: false,
     focus: false,
     active: false,
   };
@@ -37,9 +38,11 @@ export default class Handle extends Component {
   }
 
   componentWillReceiveProps(properties: Object): void {
-    // todo add util method to fid diffs
-    if (properties.left !== this.props.left ||
-      properties.style !== this.props.style) {
+    if (notSimilar(
+      properties,
+      this.props,
+      ['left', 'style', 'hoverStyle', 'focusStyle', 'activeStyle']
+    )) {
       this.style = calculateStyle(styles, this.state, properties);
     }
   }
@@ -49,16 +52,16 @@ export default class Handle extends Component {
   }
 
   _onMouseEnter: Function = (): void => {
-    this.style = calculateStyle(styles, { ...this.state, ...{ hovered: true } }, this.props);
+    this.style = calculateStyle(styles, { ...this.state, ...{ hover: true } }, this.props);
     this.setState({
-      hovered: true,
+      hover: true,
     });
   };
 
   _onMouseLeave: Function = (): void => {
-    this.style = calculateStyle(styles, { ...this.state, ...{ hovered: false } }, this.props);
+    this.style = calculateStyle(styles, { ...this.state, ...{ hover: false } }, this.props);
     this.setState({
-      hovered: false,
+      hover: false,
     });
   };
 
