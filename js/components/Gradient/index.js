@@ -1,13 +1,30 @@
 /* @flow */
 
-import React, { PropTypes } from 'react';
-import styles from './styles.css';
+import React, { PropTypes, Component } from 'react';
+import styles from './styles';
 
-const Gradient = ({ className }: Object) =>
-  <div className={`${styles.wrapper} ${className}`} />;
+export default class Gradient extends Component {
 
-Gradient.propTypes = {
-  className: PropTypes.string,
-};
+  static propTypes = {
+    className: PropTypes.string,
+    style: PropTypes.object,
+  };
 
-export default Gradient;
+  componentWillReceiveProps(properties: Object): void {
+    if (properties.style !== this.props.style) {
+      this.style = { ...styles.wrapper, ...properties.style };
+    }
+  }
+
+  style: Object = { ...styles.wrapper, ...this.props.style };
+
+  render(): any {
+    const { className } = this.props;
+    return (
+      <div
+        style={this.style}
+        className={className}
+      />
+    );
+  }
+}

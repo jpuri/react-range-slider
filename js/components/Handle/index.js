@@ -1,8 +1,8 @@
 /* @flow */
 
 import React, { Component, PropTypes } from 'react';
-import classnames from 'classnames';
-import styles from './styles.css';
+import { injectStyle, removeStyle, calculateStyle } from '../../utils/handle';
+import styles from './styles';
 
 export default class Handle extends Component {
 
@@ -14,33 +14,49 @@ export default class Handle extends Component {
     afterChange: PropTypes.func.isRequired,
     tabIndex: PropTypes.number,
     step: PropTypes.number.isRequired,
+    style: PropTypes.object,
+    focusStyle: PropTypes.object,
+    hoverStyle: PropTypes.object,
+    activeStyle: PropTypes.object,
     className: PropTypes.string,
   };
 
   state: Object = {
     hovered: false,
+    focus: false,
     active: false,
   };
+
+  componentWillMount(): void {
+    injectStyle();
+  }
 
   componentDidMount(): void {
     document.addEventListener('mousemove', this._onDocumentMouseMove);
     document.addEventListener('mouseup', this._onDocumentMouseUp);
   }
 
-  componentWillReceiveProps(props: Object): void {
-    if (props.left !== this.props.left
-      || props.right !== this.props.right) {
-      this.style = { left: props.left, right: props.right };
+  componentWillReceiveProps(properties: Object): void {
+    // todo add util method to fid diffs
+    if (properties.left !== this.props.left ||
+      properties.style !== this.props.style) {
+      this.style = calculateStyle(styles, this.state, properties);
     }
   }
 
+  componentWillUnmount(): void {
+    removeStyle();
+  }
+
   _onMouseEnter: Function = (): void => {
+    this.style = calculateStyle(styles, { ...this.state, ...{ hovered: true } }, this.props);
     this.setState({
       hovered: true,
     });
   };
 
   _onMouseLeave: Function = (): void => {
+    this.style = calculateStyle(styles, { ...this.state, ...{ hovered: false } }, this.props);
     this.setState({
       hovered: false,
     });
@@ -61,6 +77,7 @@ export default class Handle extends Component {
   };
 
   _onContextMenu: Function = (): void => {
+    this.style = calculateStyle(styles, { ...this.state, ...{ active: false } }, this.props);
     this.setState({
       active: false,
     });
@@ -89,6 +106,7 @@ export default class Handle extends Component {
   };
 
   _moveStart: Function = (position: number): void => {
+    this.style = calculateStyle(styles, { ...this.state, ...{ active: true } }, this.props);
     this.currentPos = position;
     this.lastPos = position;
     this.setState({
@@ -110,18 +128,21 @@ export default class Handle extends Component {
   };
 
   _moveEnd: Function = (): void => {
+    this.style = calculateStyle(styles, { ...this.state, ...{ active: false } }, this.props);
     this.setState({
       active: false,
     });
   };
 
   _onFocus: Function = (): void => {
+    this.style = calculateStyle(styles, { ...this.state, ...{ focus: true } }, this.props);
     this.setState({
       focus: true,
     });
   };
 
   _onBlur: Function = (): void => {
+    this.style = calculateStyle(styles, { ...this.state, ...{ focus: false } }, this.props);
     this.setState({
       focus: false,
     });
@@ -129,9 +150,11 @@ export default class Handle extends Component {
 
   _onKeyDown: Function = (event: Object): void => {
     if (event.key === 'ArrowDown' || event.key === 'ArrowLeft') {
+      event.preventDefault();
       this.props.handleMove(-1);
       this.props.afterChange();
     } else if (event.key === 'ArrowUp' || event.key === 'ArrowRight') {
+      event.preventDefault();
       this.props.handleMove(1);
       this.props.afterChange();
     }
@@ -140,8 +163,11 @@ export default class Handle extends Component {
   currentPos: number;
   lastPos: number;
   style: Object = {
-    left: this.props.left,
-    right: this.props.right,
+    ...styles.handle,
+    ...this.props.style,
+    ...{
+      left: this.props.left,
+    },
   };
 
   render(): Object {
@@ -151,12 +177,7 @@ export default class Handle extends Component {
         ref={handleRef}
         style={this.style}
         tabIndex={tabIndex}
-        className={classnames(
-          styles.handle, {
-            [`${className}`]: !!className,
-            [`${styles.default}`]: !className,
-          }
-        )}
+        className={`handle ${className}`}
         onFocus={this._onFocus}
         onBlur={this._onBlur}
         onKeyDown={this._onKeyDown}

@@ -1,24 +1,32 @@
 /* @flow */
 
-import React, { PropTypes } from 'react';
-import classnames from 'classnames';
-import styles from './styles.css';
+import React, { PropTypes, Component } from 'react';
+import styles from './styles';
 
-const Track = ({ className, trackRef } : Object) =>
-  <div
-    className={classnames(
-      styles.track, {
-        [`${className}`]: !!className,
-        [`${styles.default}`]: !className,
-      }
-    )}
-    ref={trackRef}
-  >
-  </div>;
+export default class Track extends Component {
 
-Track.propTypes = {
-  className: PropTypes.string,
-  trackRef: PropTypes.func.isRequired,
-};
+  static propTypes = {
+    trackRef: PropTypes.func.isRequired,
+    className: PropTypes.string,
+    style: PropTypes.object,
+  };
 
-export default Track;
+  componentWillReceiveProps(properties: Object): void {
+    if (properties.style !== this.props.style) {
+      this.style = { ...styles.wrapper, ...properties.style };
+    }
+  }
+
+  style: Object = { ...styles.track, ...this.props.style };
+
+  render(): any {
+    const { className, trackRef } = this.props;
+    return (
+      <div
+        ref={trackRef}
+        style={this.style}
+        className={className}
+      />
+    );
+  }
+}

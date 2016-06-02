@@ -1,44 +1,47 @@
 /* @flow */
 
 import React, { Component, PropTypes } from 'react';
-import classnames from 'classnames';
-import styles from './styles.css';
+import styles from './styles';
 
 export default class HighlightedTrack extends Component {
 
   static propTypes = {
+    style: PropTypes.object,
     className: PropTypes.string,
     left: PropTypes.string.isRequired,
     width: PropTypes.string.isRequired,
   };
 
-  componentWillReceiveProps(props: Object): void {
-    if (props.left !== this.props.left ||
-      props.width !== this.props.width) {
+  componentWillReceiveProps(properties: Object): void {
+    if (properties.left !== this.props.left ||
+      properties.width !== this.props.width ||
+      properties.style !== this.props.style) {
       this.style = {
-        left: props.left,
-        width: props.width,
+        ...styles.highlightedTrack,
+        ...properties.style,
+        ...{
+          left: properties.left,
+          width: properties.width,
+        },
       };
     }
   }
 
   style: Object = {
-    left: this.props.left,
-    width: this.props.width,
+    ...styles.highlightedTrack,
+    ...this.props.style,
+    ...{
+      left: this.props.left,
+      width: this.props.width,
+    },
   };
-
 
   render(): Object {
     const { className } = this.props;
     return (
       <div
         style={this.style}
-        className={classnames(
-          styles.highlightedTrack, {
-            [`${className}`]: !!className,
-            [`${styles.default}`]: !className,
-          }
-        )}
+        className={className}
       >
       </div>
     );

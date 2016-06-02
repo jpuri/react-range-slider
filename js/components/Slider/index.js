@@ -4,7 +4,7 @@ import React, { Component, PropTypes } from 'react';
 import Track from '../Track';
 import Handle from '../Handle';
 import Gradient from '../Gradient';
-import styles from './styles.css';
+import styles from './styles';
 import {
   has,
   stepValidator,
@@ -31,9 +31,16 @@ export default class Slider extends Component {
     disabled: PropTypes.bool,
     readOnly: PropTypes.bool,
     'aria-labelledby': PropTypes.string,
+    wrapperStyle: PropTypes.string,
+    trackStyle: PropTypes.string,
+    gradientStyle: PropTypes.string,
     wrapperClassName: PropTypes.string,
     trackClassName: PropTypes.string,
-    highlightedTrackClassName: PropTypes.string,
+    gradientClassName: PropTypes.string,
+    handleStyle: PropTypes.string,
+    handleFocusStyle: PropTypes.string,
+    handleHoverStyle: PropTypes.string,
+    handleActiveStyle: PropTypes.string,
     handleClassName: PropTypes.string,
   };
 
@@ -65,6 +72,12 @@ export default class Slider extends Component {
       this.setState({
         value: properties.value,
       });
+    }
+    if (properties.style !== this.props.style) {
+      this.style = {
+        ...styles.wrapper,
+        ...properties.wrapperStyle,
+      };
     }
   }
 
@@ -177,6 +190,11 @@ export default class Slider extends Component {
     }
   };
 
+  style: Object = {
+    ...styles.wrapper,
+    ...this.props.wrapperStyle,
+  };
+
   render(): Object {
     let position = 0;
     let percentageFactor = 1;
@@ -187,8 +205,24 @@ export default class Slider extends Component {
       value,
     } = this.state;
     const {
+      id,
       min,
       max,
+      step,
+      name,
+      tabIndex,
+      disabled,
+      readOnly,
+      trackStyle,
+      handleStyle,
+      handleFocusStyle,
+      handleHoverStyle,
+      handleActiveStyle,
+      gradientStyle,
+      wrapperClassName,
+      trackClassName,
+      handleClassName,
+      gradientClassName,
     } = this.props;
     this.value = getValueOrAlt(value, min);
     if (trackWidth && handleWidth) {
@@ -206,35 +240,41 @@ export default class Slider extends Component {
     }
     return (
       <div
-        id={this.props.id}
-        name={this.props.name}
-        className={`${styles.wrapper} ${this.props.wrapperClassName}`}
+        id={id}
+        name={name}
+        style={this.style}
+        className={wrapperClassName}
         onClick={this._onWrapperMouseDown}
         onTouchStart={this._onWrapperTouchStart}
         role="slider"
         aria-labelledby={this.props['aria-labelledby']}
-        aria-valuemin={this.props.min}
-        aria-valuemax={this.props.max}
+        aria-valuemin={min}
+        aria-valuemax={max}
         aria-valuetext={value}
         aria-orientation="horizontal"
-        aria-disabled={this.props.disabled}
-        aria-readonly={this.props.readonly}
+        aria-disabled={disabled}
+        aria-readonly={readOnly}
       >
         <Track
           trackRef={this._setFactor}
-          className={this.props.trackClassName}
+          style={trackStyle}
+          className={trackClassName}
         />
         <Handle
           left={`${position * percentageFactor}%`}
-          tabIndex={this.props.disabled ? undefined : this.props.tabIndex || 0}
+          tabIndex={disabled ? undefined : tabIndex || 0}
           handleRef={this._setHandleWidth}
           handleMove={this._handleMove}
           afterChange={this._afterChange}
           factor={this.factor}
-          step={this.props.step}
-          className={this.props.handleClassName}
+          step={step}
+          style={handleStyle}
+          focusStyle={handleFocusStyle}
+          hoverStyle={handleHoverStyle}
+          activeStyle={handleActiveStyle}
+          className={handleClassName}
         />
-        {this.props.disabled ? <Gradient /> : undefined}
+        {disabled ? <Gradient style={gradientStyle} className={gradientClassName} /> : undefined}
       </div>
     );
   }

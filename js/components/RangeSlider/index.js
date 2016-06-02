@@ -5,7 +5,7 @@ import Track from '../Track';
 import HighlightedTrack from '../HighlightedTrack';
 import Handle from '../Handle';
 import Gradient from '../Gradient';
-import styles from './styles.css';
+import styles from './styles';
 import {
   has,
   stepValidator,
@@ -32,9 +32,18 @@ export default class RangeSlider extends Component {
     disabled: PropTypes.bool,
     readOnly: PropTypes.bool,
     'aria-labelledby': PropTypes.string,
+    wrapperStyle: PropTypes.string,
+    trackStyle: PropTypes.string,
+    highlightedTrackStyle: PropTypes.string,
+    gradientStyle: PropTypes.string,
     wrapperClassName: PropTypes.string,
     trackClassName: PropTypes.string,
     highlightedTrackClassName: PropTypes.string,
+    gradientClassName: PropTypes.string,
+    handleStyle: PropTypes.string,
+    handleFocusStyle: PropTypes.string,
+    handleHoverStyle: PropTypes.string,
+    handleActiveStyle: PropTypes.string,
     handleClassName: PropTypes.string,
   };
 
@@ -75,6 +84,12 @@ export default class RangeSlider extends Component {
         start: properties.value && properties.value.start,
         end: properties.value && properties.value.end,
       });
+    }
+    if (properties.style !== this.props.style) {
+      this.style = {
+        ...styles.wrapper,
+        ...properties.wrapperStyle,
+      };
     }
   }
 
@@ -227,6 +242,11 @@ export default class RangeSlider extends Component {
     }
   };
 
+  style: Object = {
+    ...styles.wrapper,
+    ...this.props.wrapperStyle,
+  };
+
   render(): Object {
     let startValue = 0;
     let endValue = 0;
@@ -239,8 +259,26 @@ export default class RangeSlider extends Component {
       end,
     } = this.state;
     const {
+      id,
       min,
       max,
+      step,
+      name,
+      tabIndex,
+      disabled,
+      readOnly,
+      trackStyle,
+      highlightedTrackStyle,
+      handleStyle,
+      handleFocusStyle,
+      handleHoverStyle,
+      handleActiveStyle,
+      gradientStyle,
+      wrapperClassName,
+      trackClassName,
+      highlightedTrackClassName,
+      handleClassName,
+      gradientClassName,
     } = this.props;
     this.start = getValueOrAlt(start, min);
     this.end = getValueOrAlt(end, max);
@@ -267,50 +305,58 @@ export default class RangeSlider extends Component {
     }
     return (
       <div
-        id={this.props.id}
-        name={this.props.name}
-        className={`${styles.wrapper} ${this.props.wrapperClassName}`}
+        id={id}
+        name={name}
+        style={this.style}
+        className={wrapperClassName}
         onClick={this._onWrapperMouseDown}
         onTouchStart={this._onWrapperTouchStart}
         role="slider"
         aria-labelledby={this.props['aria-labelledby']}
-        aria-valuemin={this.props.min}
-        aria-valuemax={this.props.max}
+        aria-valuemin={min}
+        aria-valuemax={max}
         aria-valuetext={`${start} - ${end}`}
         aria-orientation="horizontal"
-        aria-disabled={this.props.disabled}
-        aria-readonly={this.props.readonly}
+        aria-disabled={disabled}
+        aria-readonly={readOnly}
       >
         <Track
+          style={trackStyle}
           trackRef={this._setFactor}
-          className={this.props.trackClassName}
+          className={trackClassName}
         />
         <HighlightedTrack
+          style={highlightedTrackStyle}
+          className={highlightedTrackClassName}
           left={`${startValue * percentageFactor}%`}
           width={`${(endValue - startValue) * percentageFactor}%`}
-          className={this.props.highlightedTrackClassName}
         />
         <Handle
           left={`${startValue * percentageFactor}%`}
-          tabIndex={this.props.disabled ? undefined : this.props.tabIndex || 0}
+          tabIndex={disabled ? undefined : tabIndex || 0}
           handleRef={this._setHandleWidth}
           handleMove={this._startHandleMove}
           afterChange={this._afterChange}
           factor={this.factor}
-          step={this.props.step}
-          className={this.props.handleClassName}
+          step={step}
+          style={handleStyle}
+          className={handleClassName}
         />
         <Handle
           left={`${endValue * percentageFactor}%`}
-          tabIndex={this.props.disabled ? undefined : this.props.tabIndex || 0}
+          tabIndex={disabled ? undefined : tabIndex || 0}
           handleRef={this._setHandleWidth}
           handleMove={this._endHandleMove}
           afterChange={this._afterChange}
           factor={this.factor}
-          step={this.props.step}
-          className={this.props.handleClassName}
+          step={step}
+          style={handleStyle}
+          focusStyle={handleFocusStyle}
+          hoverStyle={handleHoverStyle}
+          activeStyle={handleActiveStyle}
+          className={handleClassName}
         />
-        {this.props.disabled ? <Gradient /> : undefined}
+        {disabled ? <Gradient style={gradientStyle} className={gradientClassName} /> : undefined}
       </div>
     );
   }

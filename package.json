@@ -71,8 +71,5 @@
     "name": "Jyoti Puri",
     "email": "jyotipuri@gmail.com"
   },
-  "license": "MIT",
-  "dependencies": {
-    "classnames": "^2.2.5"
-  }
+  "license": "MIT"
 }

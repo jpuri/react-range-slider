@@ -30,27 +30,27 @@
   margin-top: 5px;
 }
 .firstTrack {
-  background-color: #ffcce6;
-  border: 1px solid #ff0080;
+  background-color: #ffcce6 !important;
+  border: 1px solid #ff0080 !important;
 }
 .firstHighlightedTrack {
-  background-color: #ff0080;
-  border: 1px solid #ff0080;
+  background-color: #ff0080 !important;
+  border: 1px solid #ff0080 !important;
 }
 .firstHandle {
-  background-color: white;
-  border: 1px solid #e60073;
-  border-radius: 50%;
+  background-color: white !important;
+  border: 1px solid #e60073 !important;
+  border-radius: 50% !important;
 }
 .firstHandle:focus {
-  background-color: white;
-  border: 1px solid #b30059;
+  background-color: white !important;
+  border: 1px solid #b30059 !important;
 }
 .firstHandle:hover {
-  box-shadow: 0px 0px 5px 0px #ff99cc;
+  box-shadow: 0px 0px 5px 0px #ff99cc !important;
 }
 .firstHandle:active {
-  box-shadow: inset 0px 0px 5px 0px #ff99cc;
+  box-shadow: inset 0px 0px 5px 0px #ff99cc !important;
 }
 .secondTrack {
   background-color: white;
