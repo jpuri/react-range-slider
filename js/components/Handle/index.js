@@ -2,6 +2,7 @@
 
 import React, { Component, PropTypes } from 'react';
 import { injectStyle, removeStyle, calculateStyle } from '../../utils/handle';
+import { notSimilar } from '../../utils/common';
 import styles from './styles';
 
 export default class Handle extends Component {
@@ -13,17 +14,21 @@ export default class Handle extends Component {
     handleMove: PropTypes.func.isRequired,
     afterChange: PropTypes.func.isRequired,
     tabIndex: PropTypes.number,
+    disabled: PropTypes.bool,
+    readOnly: PropTypes.bool,
     step: PropTypes.number.isRequired,
     style: PropTypes.object,
     focusStyle: PropTypes.object,
     hoverStyle: PropTypes.object,
     activeStyle: PropTypes.object,
+    disabledStyle: PropTypes.object,
     className: PropTypes.string,
+    disabledClassName: PropTypes.string,
   };
 
   state: Object = {
     hovered: false,
-    focus: false,
+    focused: false,
     active: false,
   };
 
@@ -37,9 +42,11 @@ export default class Handle extends Component {
   }
 
   componentWillReceiveProps(properties: Object): void {
-    // todo add util method to fid diffs
-    if (properties.left !== this.props.left ||
-      properties.style !== this.props.style) {
+    if (notSimilar(
+      properties,
+      this.props,
+      ['left', 'style', 'hoverStyle', 'focusStyle', 'activeStyle']
+    )) {
       this.style = calculateStyle(styles, this.state, properties);
     }
   }
@@ -49,31 +56,42 @@ export default class Handle extends Component {
   }
 
   _onMouseEnter: Function = (): void => {
-    this.style = calculateStyle(styles, { ...this.state, ...{ hovered: true } }, this.props);
-    this.setState({
-      hovered: true,
-    });
+    if (!this.props.disabled) {
+      this.style = calculateStyle(styles, { ...this.state, ...{ hovered: true } }, this.props);
+      this.setState({
+        hovered: true,
+      });
+    }
   };
 
   _onMouseLeave: Function = (): void => {
-    this.style = calculateStyle(styles, { ...this.state, ...{ hovered: false } }, this.props);
-    this.setState({
-      hovered: false,
-    });
+    if (!this.props.disabled) {
+      this.style = calculateStyle(styles, { ...this.state, ...{ hovered: false } }, this.props);
+      this.setState({
+        hovered: false,
+      });
+    }
   };
 
   _onMouseDown: Function = (event: Object): void => {
-    this._moveStart(event.pageX);
+    const { disabled, readOnly } = this.props;
+    if (!disabled && !readOnly) {
+      this._moveStart(event.pageX);
+    }
   };
 
   _onDocumentMouseMove: Function = (event: Object): void => {
-    if (this.state.active) {
+    const { disabled, readOnly } = this.props;
+    if (!disabled && !readOnly && this.state.active) {
       this._move(event.pageX);
     }
   };
 
   _onDocumentMouseUp: Function = (): void => {
-    this._moveEnd();
+    const { disabled, readOnly } = this.props;
+    if (!disabled && !readOnly && this.state.active) {
+      this._moveEnd();
+    }
   };
 
   _onContextMenu: Function = (): void => {
@@ -84,21 +102,27 @@ export default class Handle extends Component {
   };
 
   _onTouchStart: Function = (event: Object): void => {
-    if (event.touches.length === 1) {
+    const { disabled, readOnly } = this.props;
+    if (!disabled && !readOnly && event.touches.length === 1) {
+      event.stopPropagation();
       event.preventDefault();
       this._moveStart(event.touches[0].pageX);
     }
   };
 
   _onTouchMove: Function = (event: Object): void => {
-    if (this.state.active) {
+    const { disabled, readOnly } = this.props;
+    if (!disabled && !readOnly && this.state.active) {
+      event.stopPropagation();
       event.preventDefault();
       this._move(event.touches[0].pageX);
     }
   };
 
   _onTouchEnd: Function = (event: Object): void => {
-    if (this.state.active) {
+    const { disabled, readOnly } = this.props;
+    if (!disabled && !readOnly && this.state.active) {
+      event.stopPropagation();
       event.preventDefault();
       this._moveEnd();
       this.props.afterChange();
@@ -135,28 +159,33 @@ export default class Handle extends Component {
   };
 
   _onFocus: Function = (): void => {
-    this.style = calculateStyle(styles, { ...this.state, ...{ focus: true } }, this.props);
+    this.style = calculateStyle(styles, { ...this.state, ...{ focused: true } }, this.props);
     this.setState({
-      focus: true,
+      focused: true,
     });
   };
 
   _onBlur: Function = (): void => {
-    this.style = calculateStyle(styles, { ...this.state, ...{ focus: false } }, this.props);
+    this.style = calculateStyle(styles, { ...this.state, ...{ focused: false } }, this.props);
     this.setState({
-      focus: false,
+      focused: false,
     });
   };
 
   _onKeyDown: Function = (event: Object): void => {
-    if (event.key === 'ArrowDown' || event.key === 'ArrowLeft') {
-      event.preventDefault();
-      this.props.handleMove(-1);
-      this.props.afterChange();
-    } else if (event.key === 'ArrowUp' || event.key === 'ArrowRight') {
-      event.preventDefault();
-      this.props.handleMove(1);
-      this.props.afterChange();
+    const { disabled, readOnly } = this.props;
+    if (!disabled && !readOnly) {
+      if (event.key === 'ArrowDown' || event.key === 'ArrowLeft') {
+        event.stopPropagation();
+        event.preventDefault();
+        this.props.handleMove(-1);
+        this.props.afterChange();
+      } else if (event.key === 'ArrowUp' || event.key === 'ArrowRight') {
+        event.stopPropagation();
+        event.preventDefault();
+        this.props.handleMove(1);
+        this.props.afterChange();
+      }
     }
   };
 
@@ -168,16 +197,25 @@ export default class Handle extends Component {
     ...{
       left: this.props.left,
     },
+    ...(this.props.disabled ?
+      { ...styles.disabledHandle, ...this.props.disabledStyle } :
+      {}
+    ),
   };
 
   render(): Object {
-    const { handleRef, tabIndex, className } = this.props;
+    const { handleRef, tabIndex, className, disabledClassName, disabled } = this.props;
     return (
       <div
         ref={handleRef}
         style={this.style}
+        disabled={disabled}
         tabIndex={tabIndex}
-        className={`handle ${className}`}
+        className={
+          (disabled && disabledClassName) ?
+          `handle ${disabledClassName}` :
+          `handle ${className}`
+        }
         onFocus={this._onFocus}
         onBlur={this._onBlur}
         onKeyDown={this._onKeyDown}

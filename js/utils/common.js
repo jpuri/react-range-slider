@@ -28,3 +28,11 @@ export function getValueOrAlt(value: any, altValue: any): any {
 export function isDefined(value: any): boolean {
   return value !== undefined && value !== null;
 }
+
+export function notSimilar(obj1: Object, obj2: Object, keys: Array<string>) {
+  if (obj1 && obj2) {
+    const differences = keys && keys.filter((k) => obj1[k] !== obj2[k]);
+    return differences && differences.length > 0;
+  }
+  return undefined;
+}

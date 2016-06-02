@@ -56,7 +56,6 @@ describe('Handle test suite', () => {
     const handle = mount(
       <Handle
         left={10}
-        right={50}
         factor={1}
         handleRef={() => {}}
         handleMove={() => {}}
@@ -64,7 +63,6 @@ describe('Handle test suite', () => {
       />
     );
     expect(handle.node.style.left).to.equal(10);
-    expect(handle.node.style.right).to.equal(50);
   });
 
   it('should set state to active when mouse is down', () => {
@@ -115,5 +113,27 @@ describe('Handle test suite', () => {
     expect(handle.state().hovered).to.equal(true);
     handle.simulate('mouseLeave');
     expect(handle.state().hovered).to.equal(false);
+  });
+
+  it('should add disabledClass if component is disabled', () => {
+    const handle =
+      shallow(<Handle disabledClassName={'testing'} />);
+    expect(handle.node.props.disabled).to.not.equal(true);
+    expect(handle.node.props.className.indexOf('testing') >= 0).to.not.equal(true);
+    const disabledHandle =
+      shallow(<Handle disabled disabledClassName={'testing'} />);
+    expect(disabledHandle.node.props.disabled).to.equal(true);
+    expect(disabledHandle.node.props.className.indexOf('testing') >= 0).to.equal(true);
+  });
+
+  it('should add disabledStyle if component is disabled', () => {
+    const handle =
+      shallow(<Handle componentdisabledStyle={{ color: 'red' }} />);
+    expect(handle.node.props.disabled).to.not.equal(true);
+    expect(handle.node.props.style.color).to.not.equal('red');
+    const disabledHandle =
+      shallow(<Handle disabled disabledStyle={{ color: 'red' }} />);
+    expect(disabledHandle.node.props.disabled).to.equal(true);
+    expect(disabledHandle.node.props.style.color).to.equal('red');
   });
 });

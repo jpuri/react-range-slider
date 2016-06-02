@@ -3,7 +3,6 @@
 import React, { Component, PropTypes } from 'react';
 import Track from '../Track';
 import Handle from '../Handle';
-import Gradient from '../Gradient';
 import styles from './styles';
 import {
   has,
@@ -31,17 +30,19 @@ export default class Slider extends Component {
     disabled: PropTypes.bool,
     readOnly: PropTypes.bool,
     'aria-labelledby': PropTypes.string,
-    wrapperStyle: PropTypes.string,
-    trackStyle: PropTypes.string,
-    gradientStyle: PropTypes.string,
     wrapperClassName: PropTypes.string,
     trackClassName: PropTypes.string,
-    gradientClassName: PropTypes.string,
-    handleStyle: PropTypes.string,
-    handleFocusStyle: PropTypes.string,
-    handleHoverStyle: PropTypes.string,
-    handleActiveStyle: PropTypes.string,
+    disabledTrackClassName: PropTypes.string,
     handleClassName: PropTypes.string,
+    disabledHandleClassName: PropTypes.string,
+    wrapperStyle: PropTypes.object,
+    trackStyle: PropTypes.object,
+    disabledTrackStyle: PropTypes.object,
+    handleStyle: PropTypes.object,
+    focusedHandleStyle: PropTypes.object,
+    hoveredHandleStyle: PropTypes.object,
+    activeHandleStyle: PropTypes.object,
+    disabledHandleStyle: PropTypes.object,
   };
 
   static defaultProps = {
@@ -176,17 +177,13 @@ export default class Slider extends Component {
 
   _onChange: Function = (value: number): void => {
     if (this.props.onChange) {
-      this.props.onChange({
-        value,
-      });
+      this.props.onChange(value);
     }
   };
 
   _afterChange: Function = (value: number): void => {
     if (this.props.afterChange) {
-      this.props.afterChange({
-        value: getValueOrAlt(value, this.state.value),
-      });
+      this.props.afterChange(getValueOrAlt(value, this.state.value));
     }
   };
 
@@ -214,15 +211,17 @@ export default class Slider extends Component {
       disabled,
       readOnly,
       trackStyle,
+      disabledTrackStyle,
       handleStyle,
-      handleFocusStyle,
-      handleHoverStyle,
-      handleActiveStyle,
-      gradientStyle,
+      focusedHandleStyle,
+      hoveredHandleStyle,
+      activeHandleStyle,
+      disabledHandleStyle,
       wrapperClassName,
       trackClassName,
+      disabledTrackClassName,
       handleClassName,
-      gradientClassName,
+      disabledHandleClassName,
     } = this.props;
     this.value = getValueOrAlt(value, min);
     if (trackWidth && handleWidth) {
@@ -256,11 +255,15 @@ export default class Slider extends Component {
         aria-readonly={readOnly}
       >
         <Track
+          disabled={disabled}
           trackRef={this._setFactor}
           style={trackStyle}
+          disabledStyle={disabledTrackStyle}
           className={trackClassName}
+          disabledClassName={disabledTrackClassName}
         />
         <Handle
+          disabled={disabled}
           left={`${position * percentageFactor}%`}
           tabIndex={disabled ? undefined : tabIndex || 0}
           handleRef={this._setHandleWidth}
@@ -269,12 +272,13 @@ export default class Slider extends Component {
           factor={this.factor}
           step={step}
           style={handleStyle}
-          focusStyle={handleFocusStyle}
-          hoverStyle={handleHoverStyle}
-          activeStyle={handleActiveStyle}
+          focusStyle={focusedHandleStyle}
+          hoverStyle={hoveredHandleStyle}
+          activeStyle={activeHandleStyle}
+          disabledStyle={disabledHandleStyle}
           className={handleClassName}
+          disabledClassName={disabledHandleClassName}
         />
-        {disabled ? <Gradient style={gradientStyle} className={gradientClassName} /> : undefined}
       </div>
     );
   }

@@ -2,9 +2,12 @@ export default {
   highlightedTrack: {
     position: 'absolute',
     width: '100%',
-    top: '46%',
-    height: 2,
-    backgroundColor: '#999999',
-    border: '1px solid #999999',
+    top: 8,
+    height: 4,
+    backgroundColor: '#b8b8b8',
+    border: '1px solid #b8b8b8',
+  },
+  disabledHighlightedTrack: {
+    opacity: '0.3',
   },
 };

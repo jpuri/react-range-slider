@@ -20,4 +20,26 @@ describe('HighlightedTrack test suite', () => {
     expect(highlightedTrack.node.style.left).to.equal(20);
     expect(highlightedTrack.node.style.width).to.equal(10);
   });
+
+  it('should add disabledClass if component is disabled', () => {
+    const highlightedTrack =
+      shallow(<HighlightedTrack disabledClassName={'testing'} />);
+    expect(highlightedTrack.node.props.disabled).to.not.equal(true);
+    expect(highlightedTrack.node.props.className).to.not.equal('testing');
+    const disabledHighlightedTrack =
+      shallow(<HighlightedTrack disabled disabledClassName={'testing'} />);
+    expect(disabledHighlightedTrack.node.props.disabled).to.equal(true);
+    expect(disabledHighlightedTrack.node.props.className).to.equal('testing');
+  });
+
+  it('should add disabledStyle if component is disabled', () => {
+    const highlightedTrack =
+      shallow(<HighlightedTrack disabledStyle={{ color: 'red' }} />);
+    expect(highlightedTrack.node.props.disabled).to.not.equal(true);
+    expect(highlightedTrack.node.props.style.color).to.not.equal('red');
+    const disabledHighlightedTrack =
+      shallow(<HighlightedTrack disabled disabledStyle={{ color: 'red' }} />);
+    expect(disabledHighlightedTrack.node.props.disabled).to.equal(true);
+    expect(disabledHighlightedTrack.node.props.style.color).to.equal('red');
+  });
 });
