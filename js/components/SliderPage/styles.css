@@ -1,8 +1,0 @@
-.root {
-  margin: 50px 50px 100px 50px;
-  display: flex;
-  flex-direction: column;
-  height: 200px;
-  max-width: 100%;
-  justify-content: space-between;
-}
