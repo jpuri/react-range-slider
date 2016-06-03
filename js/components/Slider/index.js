@@ -176,17 +176,13 @@ export default class Slider extends Component {
 
   _onChange: Function = (value: number): void => {
     if (this.props.onChange) {
-      this.props.onChange({
-        value,
-      });
+      this.props.onChange(value);
     }
   };
 
   _afterChange: Function = (value: number): void => {
     if (this.props.afterChange) {
-      this.props.afterChange({
-        value: getValueOrAlt(value, this.state.value),
-      });
+      this.props.afterChange(getValueOrAlt(value, this.state.value));
     }
   };
 

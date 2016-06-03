@@ -9,9 +9,15 @@ require('codemirror/mode/jsx/jsx');
 export default class SliderUncontrolled extends Component {
 
   state: any = {
+    value: 0,
+  };
+
+  onChange: Function = (value) => {
+    this.setState({ value });
   };
 
   render() {
+    const { value } = this.state;
     return (
       <div className={styles.root}>
         <span className={styles.description}>
@@ -25,12 +31,14 @@ export default class SliderUncontrolled extends Component {
         </span>
         <Slider
           step={2}
+          onChange={this.onChange}
           wrapperClassName={styles.slider}
           trackClassName={styles.sliderTrack}
           handleClassName={styles.sliderHandle}
         />
         <div className={styles.stateValue}>
           <span className={styles.valueText}>value: </span>
+          {value}
         </div>
         <div className={styles.code}>
           <Codemirror
