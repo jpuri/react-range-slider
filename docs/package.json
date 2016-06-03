@@ -22,6 +22,7 @@
     "html-webpack-plugin": "^2.16.1",
     "postcss-loader": "^0.9.1",
     "precss": "^1.4.0",
+    "react-codemirror": "^0.2.6",
     "rimraf": "^2.5.2",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",

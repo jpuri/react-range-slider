@@ -1,89 +1,50 @@
 .root {
-  margin: 50px 50px 100px 50px;
   display: flex;
   flex-direction: column;
-  height: 900px;
   max-width: 100%;
+  background-color: #fafafa;
   justify-content: space-between;
 }
-.headerSection {
+.header {
+  background: #f1f1f1;
+  padding: 25px;
   display: flex;
   justify-content: space-between;
+}
+.title {
+  color: #000066;
+  font-size: 40px;
+  font-family: cursive;
+  font-weight: bolder;
+}
+.subTitle {
+  color: #000066;
+  font-size: 18px;
+  font-family: inherit;
+  margin-left: 5px;
 }
 .gitLink {
   width: 125px;
   height: 50px;
 }
-.container {
-  width: 40%;
-  padding: 20px;
-  height: 50px;
-  margin-top: 70px;
+.examples {
+  padding: 50px 25px 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
-.label {
-  margin-bottom: 10px;
+.footer {
+  padding: 25px;
+  background: #f1f1f1;
+  display: flex;
+  justify-content: center;
+  font-size: 17px;
+  font-family: cursive;
 }
-.boldText {
-  font-weight: 600;
+.link {
+  font-weight: bold;
+  font-weight: bolder;
 }
-.stateValue {
-  margin-top: 5px;
-}
-.firstTrack {
-  background-color: #ffcce6 !important;
-  border: 1px solid #ff0080 !important;
-}
-.firstHighlightedTrack {
-  background-color: #ff0080 !important;
-  border: 1px solid #ff0080 !important;
-}
-.firstHandle {
-  background-color: white !important;
-  border: 1px solid #e60073 !important;
-  border-radius: 50% !important;
-}
-.firstHandle:focus {
-  background-color: white !important;
-  border: 1px solid #b30059 !important;
-}
-.firstHandle:hover {
-  box-shadow: 0px 0px 5px 0px #ff99cc !important;
-}
-.firstHandle:active {
-  box-shadow: inset 0px 0px 5px 0px #ff99cc !important;
-}
-.secondTrack {
-  background-color: white;
-  border: 1px solid #37FDFC;
-}
-.secondHighlightedTrack {
-  background-color: #37FDFC;
-  border: 1px solid #37FDFC;
-}
-.secondHandle {
-  background-color: white;
-  border: 1px solid #37FDFC;
-  border-radius: 20%;
-  width: 30px;
-  height: 30px;
-}
-.secondHandle:focus {
-  background-color: white;
-  border: 1px solid #00CDCD;
-}
-.secondHandle:hover {
-  box-shadow: 0px 0px 7px 0px #37FDFC;
-}
-.secondHandle:active {
-  box-shadow: inset 0px 0px 7px 0px #37FDFC;
-}
-.inputSection {
-  margin-bottom: 10px;
-}
-.input {
-  width: 100px;
-  border: 1px solid lightgray;
-  border-radius: 2px;
-  height: 25px;
-  margin: 0 20px 0 5px;
+.code {
+  margin-left: 25px;
 }

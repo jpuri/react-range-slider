@@ -2,7 +2,7 @@ export default {
   track: {
     position: 'absolute',
     width: '100%',
-    top: '46%',
+    top: 6,
     height: 2,
     borderRadius: 10,
     backgroundColor: '#f2f2f2',

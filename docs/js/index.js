@@ -9,7 +9,8 @@ import {
     SliderPage,
 } from './components';
 // Following import is to copy normalize.css to destination folder
-import styles from '../css/normalize.css'; // eslint-disable-line no-unused-vars
+import '../resources/normalize.css'; // eslint-disable-line no-unused-vars
+import '../resources/codemirror.css'; // eslint-disable-line no-unused-vars
 
 ReactDOM.render(<Router history={browserHistory}>
   <Route path="/" component={App}>
