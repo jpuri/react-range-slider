@@ -56,7 +56,3 @@ export default class Home extends Component {
     );
   }
 }
-
-
-// todo: unique features at top
-// todo: improve styling of default

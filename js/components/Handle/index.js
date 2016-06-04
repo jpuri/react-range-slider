@@ -210,3 +210,4 @@ export default class Handle extends Component {
 }
 
 // todo : use disabled and readonly for event handling
+// stop propagation on mouse events
