@@ -9,9 +9,9 @@ describe('HandleUtils: calculateStyle function test suite', () => {
     assert.equal(obj.left, 50);
   });
 
-  it('should add focus styles if element is focused', () => {
+  it('should add focus styles if component is focused', () => {
     const obj = calculateStyle(
-      { handleFocus: { backgroundColor: 'red' } },
+      { focusedHandle: { backgroundColor: 'red' } },
       { focus: true },
       { focusStyle: { color: 'red' } }
     );
@@ -19,9 +19,9 @@ describe('HandleUtils: calculateStyle function test suite', () => {
     assert.equal(obj.color, 'red');
   });
 
-  it('should add hover styles if element is hovered', () => {
+  it('should add hover styles if component is hovered', () => {
     const obj = calculateStyle(
-      { handleHover: { backgroundColor: 'red' } },
+      { hoveredHandle: { backgroundColor: 'red' } },
       { hover: true },
       { hoverStyle: { color: 'red' } }
     );
@@ -29,14 +29,43 @@ describe('HandleUtils: calculateStyle function test suite', () => {
     assert.equal(obj.color, 'red');
   });
 
-  it('should add active styles if element is active', () => {
+  it('should add active styles if component is active', () => {
     const obj = calculateStyle(
-      { handleActive: { backgroundColor: 'red' } },
+      { activeHandle: { backgroundColor: 'red' } },
       { active: true },
       { activeStyle: { color: 'red' } }
     );
     assert.equal(obj.backgroundColor, 'red');
     assert.equal(obj.color, 'red');
+  });
+
+  it('should add disabled styles if component is disabled', () => {
+    const obj = calculateStyle(
+      { disabledHandle: { backgroundColor: 'red' } },
+      { },
+      { disabledStyle: { color: 'red' }, disabled: true }
+    );
+    assert.equal(obj.backgroundColor, 'red');
+    assert.equal(obj.color, 'red');
+  });
+
+  it('should not add active, hover and focus styles to disabled component', () => {
+    const obj = calculateStyle(
+      {
+        hoveredHandle: { backgroundColor: 'red' },
+        activeHandle: { backgroundColor: 'red' },
+        focusedHandle: { backgroundColor: 'red' },
+      },
+      { active: true, focus: true, hover: true },
+      {
+        hoverStyle: { color: 'red' },
+        focusStyle: { color: 'red' },
+        activeStyle: { color: 'red' },
+        disabled: true,
+      },
+    );
+    assert.notEqual(obj.backgroundColor, 'red');
+    assert.notEqual(obj.color, 'red');
   });
 
   it('should add default styles correctly', () => {

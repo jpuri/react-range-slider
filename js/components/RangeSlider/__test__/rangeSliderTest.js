@@ -17,10 +17,8 @@ describe('rangeSlider test suite', () => {
     expect(node.props().readOnly).to.equal(false);
   });
 
-  it('should have 5 child nodes when disabled', () => {
+  it('should have 4 child nodes', () => {
     const rangeSlider = mount(<RangeSlider max={10} min={2} />);
     expect(rangeSlider.children().length).to.equal(4);
-    const disabledRangeSlider = mount(<RangeSlider max={10} min={2} disabled />);
-    expect(disabledRangeSlider.children().length).to.equal(5);
   });
 });

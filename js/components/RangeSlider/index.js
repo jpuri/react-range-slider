@@ -4,7 +4,6 @@ import React, { Component, PropTypes } from 'react';
 import Track from '../Track';
 import HighlightedTrack from '../HighlightedTrack';
 import Handle from '../Handle';
-import Gradient from '../Gradient';
 import styles from './styles';
 import {
   has,
@@ -32,19 +31,23 @@ export default class RangeSlider extends Component {
     disabled: PropTypes.bool,
     readOnly: PropTypes.bool,
     'aria-labelledby': PropTypes.string,
-    wrapperStyle: PropTypes.string,
-    trackStyle: PropTypes.string,
-    highlightedTrackStyle: PropTypes.string,
-    gradientStyle: PropTypes.string,
     wrapperClassName: PropTypes.string,
     trackClassName: PropTypes.string,
+    disabledTrackClassName: PropTypes.string,
     highlightedTrackClassName: PropTypes.string,
-    gradientClassName: PropTypes.string,
-    handleStyle: PropTypes.string,
-    handleFocusStyle: PropTypes.string,
-    handleHoverStyle: PropTypes.string,
-    handleActiveStyle: PropTypes.string,
+    disabledHighlightedTrackClassName: PropTypes.string,
     handleClassName: PropTypes.string,
+    disabledHandleClassName: PropTypes.string,
+    wrapperStyle: PropTypes.object,
+    trackStyle: PropTypes.object,
+    disabledTrackStyle: PropTypes.object,
+    highlightedTrackStyle: PropTypes.object,
+    disabledHighlightedTrackStyle: PropTypes.object,
+    handleStyle: PropTypes.object,
+    focusedHandleStyle: PropTypes.object,
+    hoveredHandleStyle: PropTypes.object,
+    activeHandleStyle: PropTypes.object,
+    disabledHandleStyle: PropTypes.object,
   };
 
   static defaultProps = {
@@ -268,17 +271,21 @@ export default class RangeSlider extends Component {
       disabled,
       readOnly,
       trackStyle,
+      disabledTrackStyle,
       highlightedTrackStyle,
+      disabledHighlightedTrackStyle,
       handleStyle,
-      handleFocusStyle,
-      handleHoverStyle,
-      handleActiveStyle,
-      gradientStyle,
+      focusedHandleStyle,
+      hoveredHandleStyle,
+      activeHandleStyle,
+      disabledHandleStyle,
       wrapperClassName,
       trackClassName,
+      disabledTrackClassName,
       highlightedTrackClassName,
+      disabledHighlightedTrackClassName,
       handleClassName,
-      gradientClassName,
+      disabledHandleClassName,
     } = this.props;
     this.start = getValueOrAlt(start, min);
     this.end = getValueOrAlt(end, max);
@@ -322,16 +329,24 @@ export default class RangeSlider extends Component {
       >
         <Track
           style={trackStyle}
+          disabledStyle={disabledTrackStyle}
+          disabled={disabled}
           trackRef={this._setFactor}
           className={trackClassName}
+          disabledClassName={disabledTrackClassName}
         />
         <HighlightedTrack
+          disabled={disabled}
           style={highlightedTrackStyle}
+          disabledStyle={disabledHighlightedTrackStyle}
           className={highlightedTrackClassName}
           left={`${startValue * percentageFactor}%`}
           width={`${(endValue - startValue) * percentageFactor}%`}
+          className={highlightedTrackClassName}
+          disabledClassName={disabledHighlightedTrackClassName}
         />
         <Handle
+          disabled={disabled}
           left={`${startValue * percentageFactor}%`}
           tabIndex={disabled ? undefined : tabIndex || 0}
           handleRef={this._setHandleWidth}
@@ -340,9 +355,12 @@ export default class RangeSlider extends Component {
           factor={this.factor}
           step={step}
           style={handleStyle}
+          disabledStyle={disabledHandleStyle}
           className={handleClassName}
+          disabledClassName={disabledHandleClassName}
         />
         <Handle
+          disabled={disabled}
           left={`${endValue * percentageFactor}%`}
           tabIndex={disabled ? undefined : tabIndex || 0}
           handleRef={this._setHandleWidth}
@@ -351,12 +369,13 @@ export default class RangeSlider extends Component {
           factor={this.factor}
           step={step}
           style={handleStyle}
-          focusStyle={handleFocusStyle}
-          hoverStyle={handleHoverStyle}
-          activeStyle={handleActiveStyle}
+          focusStyle={focusedHandleStyle}
+          hoverStyle={hoveredHandleStyle}
+          activeStyle={activeHandleStyle}
+          disabledStyle={disabledHandleStyle}
           className={handleClassName}
+          disabledClassName={disabledHandleClassName}
         />
-        {disabled ? <Gradient style={gradientStyle} className={gradientClassName} /> : undefined}
       </div>
     );
   }

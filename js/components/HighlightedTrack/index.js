@@ -8,7 +8,10 @@ export default class HighlightedTrack extends Component {
 
   static propTypes = {
     style: PropTypes.object,
+    disabledStyle: PropTypes.object,
     className: PropTypes.string,
+    disabledClassName: PropTypes.string,
+    disabled: PropTypes.bool,
     left: PropTypes.string.isRequired,
     width: PropTypes.string.isRequired,
   };
@@ -26,6 +29,9 @@ export default class HighlightedTrack extends Component {
           left: properties.left,
           width: properties.width,
         },
+        ...(this.props.disabled ?
+          { ...styles.disabledHighlightedTrack, ...this.props.disabledStyle }
+           : {}),
       };
     }
   }
@@ -37,14 +43,18 @@ export default class HighlightedTrack extends Component {
       left: this.props.left,
       width: this.props.width,
     },
+    ...(this.props.disabled ?
+      { ...styles.disabledHighlightedTrack, ...this.props.disabledStyle }
+       : {}),
   };
 
   render(): Object {
-    const { className } = this.props;
+    const { className, disabledClassName, disabled } = this.props;
     return (
       <div
         style={this.style}
-        className={className}
+        disabled={disabled}
+        className={(disabled && disabledClassName) ? disabledClassName : className}
       >
       </div>
     );

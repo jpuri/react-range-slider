@@ -17,10 +17,8 @@ describe('Slider test suite', () => {
     expect(node.props().readOnly).to.equal(false);
   });
 
-  it('should have 5 child nodes when disabled', () => {
+  it('should have 2 child nodes', () => {
     const slider = mount(<Slider max={10} min={2} />);
     expect(slider.children().length).to.equal(2);
-    const disabledSlider = mount(<Slider max={10} min={2} disabled />);
-    expect(disabledSlider.children().length).to.equal(3);
   });
 });

@@ -20,25 +20,33 @@ export function removeStyle(): void {
 
 export function calculateStyle(styles, state, props): Object {
   const { hover, focus, active } = state;
-  const { left, style, hoverStyle, focusStyle, activeStyle } = props;
-  const calcHoverStyle = hover
-    ? { ...styles.handleHover, ...hoverStyle }
-    : undefined;
-  const calcFocusStyle = focus
-    ? { ...styles.handleFocus, ...focusStyle }
-    : undefined;
-  const calcActiveStyle = active
-    ? { ...styles.handleActive, ...activeStyle }
-    : undefined;
+  const { left, style, hoverStyle, focusStyle, activeStyle, disabledStyle, disabled } = props;
+  let calcHoverStyle;
+  let calcFocusStyle;
+  let calcActiveStyle;
+  let calcDisabledStyle;
+  if (disabled) {
+    calcDisabledStyle = { ...styles.disabledHandle, ...disabledStyle };
+  } else {
+    if (hover) {
+      calcHoverStyle = { ...styles.hoveredHandle, ...hoverStyle };
+    }
+    if (focus) {
+      calcFocusStyle = { ...styles.focusedHandle, ...focusStyle };
+    }
+    if (active) {
+      calcActiveStyle = { ...styles.activeHandle, ...activeStyle };
+    }
+  }
   return {
     ...styles.handle,
     ...style,
     ...{
       left,
     },
+    ...calcDisabledStyle,
     ...calcHoverStyle,
     ...calcFocusStyle,
     ...calcActiveStyle,
   };
 }
-// todo: test coverage

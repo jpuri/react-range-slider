@@ -7,4 +7,7 @@ export default {
     backgroundColor: '#999999',
     border: '1px solid #999999',
   },
+  disabledHighlightedTrack: {
+    opacity: '0.3',
+  },
 };

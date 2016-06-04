@@ -6,7 +6,7 @@ import { Slider } from 'reactrangeslider'; // eslint-disable-line import/no-unre
 import Codemirror from 'react-codemirror';
 require('codemirror/mode/jsx/jsx');
 
-export default class SliderUncontrolled extends Component {
+export default class SliderDisabled extends Component {
 
   state: any = {
     value: 50,
@@ -21,20 +21,27 @@ export default class SliderUncontrolled extends Component {
     return (
       <div className={styles.root}>
         <span className={styles.description}>
-          A uncontrolled slider with single handle
+          A disabled slider with single handle
         </span>
         <span className={styles.info}>
-          parameters - step: 2
+          Disabled components can not be focused &nbsp;
+          <a href="https://www.w3.org/TR/html5/disabled-elements.html#disabled-elements">W3C</a>
+        </span>
+        <span className={styles.info}>
+          parameters - step: 2, defaultValue: 25
         </span>
         <span className={styles.info}>
           styling using classes
         </span>
         <Slider
           step={2}
+          disabled
+          defaultValue={25}
           onChange={this.onChange}
           wrapperClassName={styles.slider}
           trackClassName={styles.sliderTrack}
           handleClassName={styles.sliderHandle}
+          disabledHandleClassName={styles.disabledSliderHandle}
         />
         <div className={styles.stateValue}>
           <span className={styles.valueText}>value: </span>
@@ -42,9 +49,11 @@ export default class SliderUncontrolled extends Component {
         </div>
         <div className={styles.code}>
           <Codemirror
-            value={'<Slider\n  step={2}\n  onChange={this.onChange}\n  ' +
+            value={'<Slider\n  step={2}\n  disabled\n  defaultValue={25}\n  ' +
+              'onChange={this.onChange}\n  ' +
               'wrapperClassName={styles.slider}\n  ' +
-              'trackClassName={styles.sliderTrack}\n  handleClassName={styles.sliderHandle}\n/>'}
+              'trackClassName={styles.sliderTrack}\n  handleClassName={styles.sliderHandle}\n  ' +
+              'disabledHandleClassName={styles.disabledSliderHandle}/>'}
             options={{
               lineNumbers: true,
               mode: 'jsx',

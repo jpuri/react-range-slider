@@ -3,6 +3,8 @@
 import React, { Component } from 'react';
 import styles from './styles.css';
 import SliderUncontrolled from '../SliderUncontrolled'; // eslint-disable-line import/no-unresolved
+import SliderControlled from '../SliderControlled'; // eslint-disable-line import/no-unresolved
+import SliderDisabled from '../SliderDisabled'; // eslint-disable-line import/no-unresolved
 
 export default class Home extends Component {
 
@@ -25,6 +27,8 @@ export default class Home extends Component {
         </div>
         <div className={styles.examples}>
           <SliderUncontrolled />
+          <SliderControlled />
+          <SliderDisabled />
         </div>
         <div className={styles.footer}>
           <span>Made By <a className={styles.link} href="https://twitter.com/jyopur" target="_blank">Jyoti</a></span>

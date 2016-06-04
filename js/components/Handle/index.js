@@ -14,17 +14,20 @@ export default class Handle extends Component {
     handleMove: PropTypes.func.isRequired,
     afterChange: PropTypes.func.isRequired,
     tabIndex: PropTypes.number,
+    disabled: PropTypes.bool,
     step: PropTypes.number.isRequired,
     style: PropTypes.object,
     focusStyle: PropTypes.object,
     hoverStyle: PropTypes.object,
     activeStyle: PropTypes.object,
+    disabledStyle: PropTypes.object,
     className: PropTypes.string,
+    disabledClassName: PropTypes.string,
   };
 
   state: Object = {
-    hover: false,
-    focus: false,
+    hovered: false,
+    focused: false,
     active: false,
   };
 
@@ -52,16 +55,16 @@ export default class Handle extends Component {
   }
 
   _onMouseEnter: Function = (): void => {
-    this.style = calculateStyle(styles, { ...this.state, ...{ hover: true } }, this.props);
+    this.style = calculateStyle(styles, { ...this.state, ...{ hovered: true } }, this.props);
     this.setState({
-      hover: true,
+      hovered: true,
     });
   };
 
   _onMouseLeave: Function = (): void => {
-    this.style = calculateStyle(styles, { ...this.state, ...{ hover: false } }, this.props);
+    this.style = calculateStyle(styles, { ...this.state, ...{ hovered: false } }, this.props);
     this.setState({
-      hover: false,
+      hovered: false,
     });
   };
 
@@ -138,16 +141,16 @@ export default class Handle extends Component {
   };
 
   _onFocus: Function = (): void => {
-    this.style = calculateStyle(styles, { ...this.state, ...{ focus: true } }, this.props);
+    this.style = calculateStyle(styles, { ...this.state, ...{ focused: true } }, this.props);
     this.setState({
-      focus: true,
+      focused: true,
     });
   };
 
   _onBlur: Function = (): void => {
-    this.style = calculateStyle(styles, { ...this.state, ...{ focus: false } }, this.props);
+    this.style = calculateStyle(styles, { ...this.state, ...{ focused: false } }, this.props);
     this.setState({
-      focus: false,
+      focused: false,
     });
   };
 
@@ -171,16 +174,25 @@ export default class Handle extends Component {
     ...{
       left: this.props.left,
     },
+    ...(this.props.disabled ?
+      { ...styles.disabledHandle, ...this.props.disabledStyle } :
+      {}
+    ),
   };
 
   render(): Object {
-    const { handleRef, tabIndex, className } = this.props;
+    const { handleRef, tabIndex, className, disabledClassName, disabled } = this.props;
     return (
       <div
         ref={handleRef}
         style={this.style}
+        disabled={disabled}
         tabIndex={tabIndex}
-        className={`handle ${className}`}
+        className={
+          (disabled && disabledClassName) ?
+          `handle ${disabledClassName}` :
+          `handle ${className}`
+        }
         onFocus={this._onFocus}
         onBlur={this._onBlur}
         onKeyDown={this._onKeyDown}
