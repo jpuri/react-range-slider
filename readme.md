@@ -1,53 +1,53 @@
-# React Range Slider
+# React Sliders
 
-An elegant range slider component for React.
-[Demo Page](http://jpuri.github.io/react-range-slider/).
+An collection of elegant slider components for React.
+[Demo Page](http://jpuri.github.io/react-sliders/).
 
 ## Installing
 
 The library is available as npm package.
 
-`npm install reactrangeslider`
+`npm install react-sliders`
 
 ## Using The component
-The component is easy to use. A simple use can be when no properties are provided to the component, it takes default value of props:
+The component is easy to use. Import the library and add the component to your JSX:
 
 ```
 import React from 'react';
 import styles from './styles.css';
-import RangeSlider from 'reactrangeslider';
-
-const MyPage = () =>its used to initialize
-  <div className={ styles.container }>
-    <RangeSlider />
-  </div>;
-```
-IMPORTANT: Please make sure that you include styles from `ReactRangeSlider.css`. The file is available in /lib folder in the repository and also part of npm package.
-In case you are using webpack for build, please make sure that you do **not** use ExtractTextPlugin to load this css file.
-
-![Small cart in header](http://i.imgur.com/r7Ot84g.gif)
-
-An example passing the range of values and step to the component:
-```
-import React from 'react';
-import styles from './styles.css';
-import RangeSlider from 'reactrangeslider';
+import Slider from 'range-sliders';
 
 const MyPage = () =>
   <div className={ styles.container }>
-    <RangeSlider min={ 20 } max={ 100 } step={ 5 } />
+    <Slider />
   </div>;
 ```
 
-More advanced example of a controlled range slider component:
+![Small cart in header](http://i.imgur.com/674BW07.gif)
+
+An example of uncontrolled slider with single handle, defaultValue and step passed in props:
 ```
 import React from 'react';
 import styles from './styles.css';
-import RangeSlider from 'reactrangeslider';
+import RangeSlider from 'react-sliders';
 
+const MyPage = () =>
+  <div className={ styles.container }>
+    <Slider defaultValue={20} step={ 5 } />
+  </div>;
+```
+
+An example of controlled range slider with two handles, value and step passed in props:
+```
+import React from 'react';
+import styles from './styles.css';
+import RangeSlider from 'react-sliders';
+
+// value={ start: 20, end: 80 }
 const MyPage = (value, onChange) =>
   <div className={ styles.container }>
-    <RangeSlider value={ value }
+    <RangeSlider
+      value={ value }
       onChange={ onChange }
       min={ 20 }
       max={ 100 }
@@ -55,6 +55,7 @@ const MyPage = (value, onChange) =>
     />
   </div>;
 ```
+Check [docs](https://github.com/jpuri/react-range-slider/tree/master/docs) for more examples.
 
 ## List of properties supported
 | Option | Description |
@@ -64,27 +65,45 @@ const MyPage = (value, onChange) =>
 | min    | minimum value in the range |
 | max    | maximum value in the range |
 | step    | amount by which the position of slider will change in one movement |
-| defaultValue    | it is used to initialize uncontrolled components, it is an object containing 2 keys: start, end |
-| value    | it is used to set value in a controlled component, it is also an object containing 2 keys: start, end  |
+| defaultValue    | it is used to initialize uncontrolled components |
+| value    | it is used to set value in a controlled component  |
 | onChange    | the function is executed whenever the value changes |
 | afterChange    | the function is executed after the user has stopped moving the slider |
 | disabled    | property used to disable component, disable component can not even receive focus |
 | readOnly    | property used to make component readOnly, it can still be focused |
-| tabIndex    | this is used to set the tabIndex of 2 handles which are moved to change value of slider |
-| rootClassName    | class applied to root div element |
-| handleClassName    | class applied to movable handles |
-| trackClassName    | class applied to track |
-| highlightedTrackClassName    | class applied to highlighted portion of track between handles |
+| tabIndex    | this is used to set the tabIndex of handles which are moved to change value of slider |
 
 ## Custom styling
-Styling of Range Slider is highly customizable. Properties rootClassName, handleClassName, trackClassName, highlightedTrackClassName described above can be used for custom styling of the component.
-By default the component uses a set of classes for styling, which is not used if a class for styking is passes in props. For example see code for docs page.
+Styling of Range Slider is highly customizable. It supports styling using both inline styles and classes. Internally the libary used inline styles, I have preferred that for ease of installation for users.
+
+If inline styles are used for styling, the inline styles passed to it will override the defaults. If classes are used for styling, you will be required to use `!important` to override corresponding default inline style.
+
+| Style Property | Description |
+| ------ | ----------- |
+| wrapperStyle    | style applied to wrapper div element |
+| trackStyle    | style applied to track |
+| disabledTrackStyle    | style applied to track of disabled component |
+| highlightedTrackStyle    | style applied to highlighted track |
+| disabledHighlightedTrackStyle    | style applied to highlighted track of disabled component |
+| handleStyle    | style applied to handle |
+| focusedHandleStyle    | style applied to focused handle |
+| hoveredHandleStyle    | style applied to hovered handle |
+| activeHandleStyle    | style applied to active handle |
+| disabledHandleStyle    | style applied to disabled handle |
+
+| Class Name | Description |
+| ------ | ----------- |
+| wrapperClassName    | class applied to wrapper div element |
+| handleClassName / disabledHandleClassName   | either of these classes is applied to the handle depending on whether its enabled or disabled |
+| trackClassName / highlightedTrackClassName    | either of these classes is applied to the track depending on whether its enabled or disabled |
+| highlightedTrackClassName / disabledHighlightedTrackClassName    | either of these classes is applied to the highlighted handle depending on whether its enabled or disabled |
+Styles applied to highlighted track are applicable only to Reage Slider with two handles and highlighted area between them.
 
 ## Device support
 Range Slider is responsive to different sizes and resolutions. Its responsive to mouse, keyboard and touch events.
 
 ## Future plans
-Adding more sliders component like vertical slider, range input with single handle, etc
+Adding more sliders component like vertical slider, vertical range slider, etc
 [motivation](https://jqueryui.com/slider/).
 
 ## License

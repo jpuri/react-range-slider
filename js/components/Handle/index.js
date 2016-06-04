@@ -15,6 +15,7 @@ export default class Handle extends Component {
     afterChange: PropTypes.func.isRequired,
     tabIndex: PropTypes.number,
     disabled: PropTypes.bool,
+    readOnly: PropTypes.bool,
     step: PropTypes.number.isRequired,
     style: PropTypes.object,
     focusStyle: PropTypes.object,
@@ -55,31 +56,42 @@ export default class Handle extends Component {
   }
 
   _onMouseEnter: Function = (): void => {
-    this.style = calculateStyle(styles, { ...this.state, ...{ hovered: true } }, this.props);
-    this.setState({
-      hovered: true,
-    });
+    if (!this.props.disabled) {
+      this.style = calculateStyle(styles, { ...this.state, ...{ hovered: true } }, this.props);
+      this.setState({
+        hovered: true,
+      });
+    }
   };
 
   _onMouseLeave: Function = (): void => {
-    this.style = calculateStyle(styles, { ...this.state, ...{ hovered: false } }, this.props);
-    this.setState({
-      hovered: false,
-    });
+    if (!this.props.disabled) {
+      this.style = calculateStyle(styles, { ...this.state, ...{ hovered: false } }, this.props);
+      this.setState({
+        hovered: false,
+      });
+    }
   };
 
   _onMouseDown: Function = (event: Object): void => {
-    this._moveStart(event.pageX);
+    const { disabled, readOnly } = this.props;
+    if (!disabled && !readOnly) {
+      this._moveStart(event.pageX);
+    }
   };
 
   _onDocumentMouseMove: Function = (event: Object): void => {
-    if (this.state.active) {
+    const { disabled, readOnly } = this.props;
+    if (!disabled && !readOnly && this.state.active) {
       this._move(event.pageX);
     }
   };
 
   _onDocumentMouseUp: Function = (): void => {
-    this._moveEnd();
+    const { disabled, readOnly } = this.props;
+    if (!disabled && !readOnly && this.state.active) {
+      this._moveEnd();
+    }
   };
 
   _onContextMenu: Function = (): void => {
@@ -90,21 +102,27 @@ export default class Handle extends Component {
   };
 
   _onTouchStart: Function = (event: Object): void => {
-    if (event.touches.length === 1) {
+    const { disabled, readOnly } = this.props;
+    if (!disabled && !readOnly && event.touches.length === 1) {
+      event.stopPropagation();
       event.preventDefault();
       this._moveStart(event.touches[0].pageX);
     }
   };
 
   _onTouchMove: Function = (event: Object): void => {
-    if (this.state.active) {
+    const { disabled, readOnly } = this.props;
+    if (!disabled && !readOnly && this.state.active) {
+      event.stopPropagation();
       event.preventDefault();
       this._move(event.touches[0].pageX);
     }
   };
 
   _onTouchEnd: Function = (event: Object): void => {
-    if (this.state.active) {
+    const { disabled, readOnly } = this.props;
+    if (!disabled && !readOnly && this.state.active) {
+      event.stopPropagation();
       event.preventDefault();
       this._moveEnd();
       this.props.afterChange();
@@ -155,14 +173,19 @@ export default class Handle extends Component {
   };
 
   _onKeyDown: Function = (event: Object): void => {
-    if (event.key === 'ArrowDown' || event.key === 'ArrowLeft') {
-      event.preventDefault();
-      this.props.handleMove(-1);
-      this.props.afterChange();
-    } else if (event.key === 'ArrowUp' || event.key === 'ArrowRight') {
-      event.preventDefault();
-      this.props.handleMove(1);
-      this.props.afterChange();
+    const { disabled, readOnly } = this.props;
+    if (!disabled && !readOnly) {
+      if (event.key === 'ArrowDown' || event.key === 'ArrowLeft') {
+        event.stopPropagation();
+        event.preventDefault();
+        this.props.handleMove(-1);
+        this.props.afterChange();
+      } else if (event.key === 'ArrowUp' || event.key === 'ArrowRight') {
+        event.stopPropagation();
+        event.preventDefault();
+        this.props.handleMove(1);
+        this.props.afterChange();
+      }
     }
   };
 
@@ -208,6 +231,3 @@ export default class Handle extends Component {
     );
   }
 }
-
-// todo : use disabled and readonly for event handling
-// stop propagation on mouse events

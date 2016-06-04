@@ -1,4 +1,4 @@
-declare module 'reactrangeslider' {
+declare module 'react-sliders' {
   declare var exports: {
     RangeSlider: () => {}
   }

@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import styles from './styles';
-import { Slider } from 'reactrangeslider'; // eslint-disable-line import/no-unresolved
+import { Slider } from 'react-sliders'; // eslint-disable-line import/no-unresolved
 import Codemirror from 'react-codemirror';
 require('codemirror/mode/jsx/jsx');
 

@@ -44,7 +44,7 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'reactrangeslider': path.join(__dirname, '../..', 'js'),
+      'react-sliders': path.join(__dirname, '../..', 'js'),
     },
     extensions: ['', '.js', '.json']
   }

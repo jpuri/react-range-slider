@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import styles from './styles';
-import { RangeSlider } from 'reactrangeslider'; // eslint-disable-line import/no-unresolved
+import { RangeSlider } from 'react-sliders'; // eslint-disable-line import/no-unresolved
 import Codemirror from 'react-codemirror';
 require('codemirror/mode/jsx/jsx');
 
@@ -27,7 +27,7 @@ export default class SliderControlled extends Component {
           A controlled slider with two handles
         </span>
         <span style={styles.info}>
-          parameters - step: 5, value :50, min: -100, max: 100
+          parameters - step: 5, value : {'{ start: -50, end: 50 }'}, min: -100, max: 100
         </span>
         <span style={styles.info}>
           inline styling

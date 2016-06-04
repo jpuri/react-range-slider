@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import styles from './styles.css';
-import { RangeSlider } from 'reactrangeslider'; // eslint-disable-line import/no-unresolved
+import { RangeSlider } from 'react-sliders'; // eslint-disable-line import/no-unresolved
 import Codemirror from 'react-codemirror';
 require('codemirror/mode/jsx/jsx');
 
@@ -31,7 +31,7 @@ export default class SliderDisabled extends Component {
           <a href="https://www.w3.org/TR/html401/interact/forms.html#adef-readonly">W3C</a>
         </span>
         <span className={styles.info}>
-          parameters - step: 2, defaultValue: 25
+          parameters - step: 2, defaultValue: {'{ start: 20, end: 80 }'}
         </span>
         <span className={styles.info}>
           default styles

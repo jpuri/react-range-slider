@@ -347,6 +347,7 @@ export default class RangeSlider extends Component {
         />
         <Handle
           disabled={disabled}
+          readOnly={readOnly}
           left={`${startValue * percentageFactor}%`}
           tabIndex={disabled ? undefined : tabIndex || 0}
           handleRef={this._setHandleWidth}
@@ -364,6 +365,7 @@ export default class RangeSlider extends Component {
         />
         <Handle
           disabled={disabled}
+          readOnly={readOnly}
           left={`${endValue * percentageFactor}%`}
           tabIndex={disabled ? undefined : tabIndex || 0}
           handleRef={this._setHandleWidth}
