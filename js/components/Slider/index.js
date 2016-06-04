@@ -87,7 +87,6 @@ export default class Slider extends Component {
   value: number;
 
   _setFactor: Function = (track: Object): void => {
-    console.log('---------into _setFactor---------')
     const trackWidth = track.clientWidth;
     this.setState({
       trackWidth,
@@ -96,7 +95,6 @@ export default class Slider extends Component {
   };
 
   _setHandleWidth: Function = ({ clientWidth }): void => {
-    console.log('---------into _setHandleWidth---------')
     if (!this.state.handleWidth) {
       this.setState({
         handleWidth: clientWidth,
@@ -239,8 +237,6 @@ export default class Slider extends Component {
       position = (position - min) * getValueOrAlt(this.factor, 1);
       percentageFactor = 100 / trackWidth;
     }
-    console.log('trackWidth', trackWidth)
-    console.log('handleWidth', handleWidth)
     return (
       <div
         id={id}
