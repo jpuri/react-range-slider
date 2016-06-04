@@ -2,14 +2,14 @@
 
 import React, { Component } from 'react';
 import styles from './styles.css';
-import { Slider } from 'reactrangeslider'; // eslint-disable-line import/no-unresolved
+import { RangeSlider } from 'reactrangeslider'; // eslint-disable-line import/no-unresolved
 import Codemirror from 'react-codemirror';
 require('codemirror/mode/jsx/jsx');
 
-export default class SliderDisabled extends Component {
+export default class SliderUncontrolled extends Component {
 
   state: any = {
-    value: 50,
+    value: {},
   };
 
   onChange: Function = (value) => {
@@ -21,41 +21,35 @@ export default class SliderDisabled extends Component {
     return (
       <div className={styles.root}>
         <span className={styles.description}>
-          A disabled slider with single handle
+          A uncontrolled slider with two handles
         </span>
         <span className={styles.info}>
-          disabled components can not be focused &nbsp;
-          <a href="https://www.w3.org/TR/html401/interact/forms.html#adef-disabled">W3C</a>
-        </span>
-        <span className={styles.info}>
-          parameters - step: 2, defaultValue: 25
+          parameters - step: 2
         </span>
         <span className={styles.info}>
           styling using classes
         </span>
         <div className={styles.sliderWrapper}>
-          <Slider
+          <RangeSlider
             step={2}
-            disabled
-            defaultValue={25}
+            value={value}
             onChange={this.onChange}
             wrapperClassName={styles.slider}
             trackClassName={styles.sliderTrack}
+            highlightedTrackClassName={styles.sliderHighlightedTrack}
             handleClassName={styles.sliderHandle}
-            disabledHandleClassName={styles.disabledSliderHandle}
           />
         </div>
-        <div className={styles.stateValue}>
-          <span className={styles.valueText}>value: </span>
-          {value}
+        <div>
+          <span className={styles.valueText}>value.start: {value.start}</span>
+          <span className={styles.valueText}>value.end: {value.end}</span>
         </div>
         <div className={styles.code}>
           <Codemirror
-            value={'<Slider\n  step={2}\n  disabled\n  defaultValue={25}\n  ' +
-              'onChange={this.onChange}\n  ' +
-              'wrapperClassName={styles.slider}\n  ' +
-              'trackClassName={styles.sliderTrack}\n  handleClassName={styles.sliderHandle}\n  ' +
-              'disabledHandleClassName={styles.disabledSliderHandle}\n/>'}
+            value={'<RangeSlider\n  step={2}\n  onChange={this.onChange}\n  ' +
+            'wrapperClassName={styles.slider}\n  ' +
+            'highlightedTrackClassName={styles.sliderHighlightedTrack}\n  ' +
+            'trackClassName={styles.sliderTrack}\n  handleClassName={styles.sliderHandle}\n/>'}
             options={{
               lineNumbers: true,
               mode: 'jsx',

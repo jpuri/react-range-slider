@@ -27,8 +27,24 @@
   width: 125px;
   height: 50px;
 }
+.featureSection{
+  margin: 20px auto;
+}
+.featureText {
+  font-size: 25px;
+  font-family: cursive;
+  text-align: center;
+  font-weight: bold;
+}
+.list {
+  list-style-type: none;
+  padding: 0;
+  text-align: center;
+  font-family: cursive;
+  line-height: 2;
+}
 .examples {
-  padding: 50px 25px 25px;
+  padding: 25px;
   display: flex;
   flex-direction: column;
   align-items: center;

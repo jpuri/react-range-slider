@@ -29,13 +29,15 @@ export default class SliderUncontrolled extends Component {
         <span className={styles.info}>
           styling using classes
         </span>
-        <Slider
-          step={2}
-          onChange={this.onChange}
-          wrapperClassName={styles.slider}
-          trackClassName={styles.sliderTrack}
-          handleClassName={styles.sliderHandle}
-        />
+        <div className={styles.sliderWrapper}>
+          <Slider
+            step={2}
+            onChange={this.onChange}
+            wrapperClassName={styles.slider}
+            trackClassName={styles.sliderTrack}
+            handleClassName={styles.sliderHandle}
+          />
+        </div>
         <div className={styles.stateValue}>
           <span className={styles.valueText}>value: </span>
           {value}

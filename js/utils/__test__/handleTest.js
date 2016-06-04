@@ -12,7 +12,7 @@ describe('HandleUtils: calculateStyle function test suite', () => {
   it('should add focus styles if component is focused', () => {
     const obj = calculateStyle(
       { focusedHandle: { backgroundColor: 'red' } },
-      { focus: true },
+      { focused: true },
       { focusStyle: { color: 'red' } }
     );
     assert.equal(obj.backgroundColor, 'red');
@@ -22,7 +22,7 @@ describe('HandleUtils: calculateStyle function test suite', () => {
   it('should add hover styles if component is hovered', () => {
     const obj = calculateStyle(
       { hoveredHandle: { backgroundColor: 'red' } },
-      { hover: true },
+      { hovered: true },
       { hoverStyle: { color: 'red' } }
     );
     assert.equal(obj.backgroundColor, 'red');
@@ -56,7 +56,7 @@ describe('HandleUtils: calculateStyle function test suite', () => {
         activeHandle: { backgroundColor: 'red' },
         focusedHandle: { backgroundColor: 'red' },
       },
-      { active: true, focus: true, hover: true },
+      { active: true, focused: true, hovered: true },
       {
         hoverStyle: { color: 'red' },
         focusStyle: { color: 'red' },

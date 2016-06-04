@@ -355,6 +355,9 @@ export default class RangeSlider extends Component {
           factor={this.factor}
           step={step}
           style={handleStyle}
+          focusStyle={focusedHandleStyle}
+          hoverStyle={hoveredHandleStyle}
+          activeStyle={activeHandleStyle}
           disabledStyle={disabledHandleStyle}
           className={handleClassName}
           disabledClassName={disabledHandleClassName}

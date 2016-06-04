@@ -16,6 +16,7 @@
 .valueText {
   color: #000066;
   font-weight: 600;
+  margin: 5px 5px 0;
 }
 .code {
   margin: 10px 0;
@@ -37,6 +38,12 @@
   height: 5px !important;
   border: 1px solid #0ab5a7 !important;
   background-color: white !important;
+  top: 12px !important;
+}
+.sliderHighlightedTrack {
+  height: 5px !important;
+  border: 1px solid #31da31 !important;
+  background-color: #dafbda !important;
   top: 12px !important;
 }
 .sliderHandle {

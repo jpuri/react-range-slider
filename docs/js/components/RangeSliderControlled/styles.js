@@ -17,6 +17,7 @@ export default {
   valueText: {
     color: '#000066',
     fontWeight: '600',
+    margin: '5px 5px 0',
   },
   code: {
     margin: '10px 0',
@@ -32,12 +33,18 @@ export default {
     width: '75%',
   },
   slider: {
-    height: 32,
+    height: 40,
   },
   trackStyle: {
     height: 5,
     border: '3px solid black',
     backgroundColor: 'white',
+    top: 14,
+  },
+  highlightedTrackStyle: {
+    height: 5,
+    border: '3px solid black',
+    backgroundColor: 'grey',
     top: 14,
   },
   handleStyle: {

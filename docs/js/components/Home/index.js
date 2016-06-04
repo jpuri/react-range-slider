@@ -5,6 +5,12 @@ import styles from './styles.css';
 import SliderUncontrolled from '../SliderUncontrolled'; // eslint-disable-line import/no-unresolved
 import SliderControlled from '../SliderControlled'; // eslint-disable-line import/no-unresolved
 import SliderDisabled from '../SliderDisabled'; // eslint-disable-line import/no-unresolved
+import RangeSliderUncontrolled
+  from '../RangeSliderUncontrolled'; // eslint-disable-line import/no-unresolved
+import RangeSliderControlled
+  from '../RangeSliderControlled'; // eslint-disable-line import/no-unresolved
+import RangeSliderReadOnly
+  from '../RangeSliderReadOnly'; // eslint-disable-line import/no-unresolved
 
 export default class Home extends Component {
 
@@ -25,10 +31,22 @@ export default class Home extends Component {
             />
           </div>
         </div>
+        <div className={styles.featureSection}>
+          <div className={styles.featureText}>Features</div>
+          <ul className={styles.list}>
+            <li>Support for both mobile and desktop devices</li>
+            <li>Cutomizable styling</li>
+            <li>Responsive to keyboard events</li>
+            <li>ARIA support</li>
+          </ul>
+        </div>
         <div className={styles.examples}>
           <SliderUncontrolled />
           <SliderControlled />
           <SliderDisabled />
+          <RangeSliderUncontrolled />
+          <RangeSliderControlled />
+          <RangeSliderReadOnly />
         </div>
         <div className={styles.footer}>
           <span>Made By <a className={styles.link} href="https://twitter.com/jyopur" target="_blank">Jyoti</a></span>
@@ -38,3 +56,7 @@ export default class Home extends Component {
     );
   }
 }
+
+
+// todo: unique features at top
+// todo: improve styling of default
