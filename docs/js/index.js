@@ -12,7 +12,7 @@ import '../resources/normalize.css'; // eslint-disable-line no-unused-vars
 import '../resources/codemirror.css'; // eslint-disable-line no-unused-vars
 
 ReactDOM.render(<Router history={browserHistory}>
-  <Route path="/react-range-slider/" component={App}>
+  <Route path="/" component={App}>
     <IndexRoute component={Home} />
   </Route>
 </Router>, document.getElementById('app'));
