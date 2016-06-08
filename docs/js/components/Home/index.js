@@ -48,6 +48,15 @@ export default class Home extends Component {
           <RangeSliderControlled />
           <RangeSliderReadOnly />
         </div>
+        <div className={styles.featureSection}>
+          <div className={styles.featureText}>Future Plans</div>
+          <ul className={styles.list}>
+            <li>
+              I plan to develop it into a complete set of slider components.
+              I will soon add to it vertical slider and vertical range slider.
+            </li>
+          </ul>
+        </div>
         <div className={styles.footer}>
           <span>Made By <a className={styles.link} href="https://twitter.com/jyopur" target="_blank">Jyoti</a></span>
           <a className={`${styles.link} ${styles.code}`} href="https://github.com/jpuri/react-range-slider" target="_blank">Code</a>

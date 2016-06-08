@@ -103,7 +103,7 @@ Styles applied to highlighted track are applicable only to Reage Slider with two
 Range Slider is responsive to different sizes and resolutions. Its responsive to mouse, keyboard and touch events.
 
 ## Future plans
-Adding more sliders component like vertical slider, vertical range slider, etc
+Making it a complete range of slider components with addition of components like vertical slider, vertical range slider, etc
 [motivation](https://jqueryui.com/slider/).
 
 ## License

@@ -32,6 +32,7 @@ export default class SliderUncontrolled extends Component {
         <div className={styles.sliderWrapper}>
           <Slider
             step={2}
+            defaultValue={value}
             onChange={this.onChange}
             wrapperClassName={styles.slider}
             trackClassName={styles.sliderTrack}
@@ -44,7 +45,8 @@ export default class SliderUncontrolled extends Component {
         </div>
         <div className={styles.code}>
           <Codemirror
-            value={'<Slider\n  step={2}\n  onChange={this.onChange}\n  ' +
+            value={'<Slider\n  defaultValue={value}\n  ' +
+              'step={2}\n  onChange={this.onChange}\n  ' +
               'wrapperClassName={styles.slider}\n  ' +
               'trackClassName={styles.sliderTrack}\n  handleClassName={styles.sliderHandle}\n/>'}
             options={{
