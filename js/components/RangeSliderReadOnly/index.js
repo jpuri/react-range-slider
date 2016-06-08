@@ -27,7 +27,7 @@ export default class SliderDisabled extends Component {
           A readonly slider with two handles
         </span>
         <span className={styles.info}>
-          disabled components can be focused &nbsp;
+          readOnly components can be focused &nbsp;
           <a href="https://www.w3.org/TR/html401/interact/forms.html#adef-readonly">W3C</a>
         </span>
         <span className={styles.info}>
