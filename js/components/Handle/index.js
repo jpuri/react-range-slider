@@ -196,7 +196,7 @@ export default class Handle extends Component {
     ...styles.handle,
     ...this.props.style,
     ...{
-      `${this.props.orientation === 'vertical' ? 'bottom' : 'left'} test`: this.props.offset,
+      [`${this.props.orientation === 'vertical' ? 'bottom' : 'left'}`]: this.props.offset,
     },
     ...(this.props.disabled ?
       { ...styles.disabledHandle, ...this.props.disabledStyle } :
