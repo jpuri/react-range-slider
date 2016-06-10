@@ -8,11 +8,12 @@ import styles from './styles';
 export default class Handle extends Component {
 
   static propTypes = {
-    left: PropTypes.string,
+    offset: PropTypes.string,
     factor: PropTypes.number.isRequired,
     handleRef: PropTypes.func.isRequired,
     handleMove: PropTypes.func.isRequired,
     afterChange: PropTypes.func.isRequired,
+    orientation: PropTypes.string,
     tabIndex: PropTypes.number,
     disabled: PropTypes.bool,
     readOnly: PropTypes.bool,
@@ -45,7 +46,7 @@ export default class Handle extends Component {
     if (notSimilar(
       properties,
       this.props,
-      ['left', 'style', 'hoverStyle', 'focusStyle', 'activeStyle']
+      ['offset', 'style', 'hoverStyle', 'focusStyle', 'activeStyle']
     )) {
       this.style = calculateStyle(styles, this.state, properties);
     }
@@ -195,7 +196,7 @@ export default class Handle extends Component {
     ...styles.handle,
     ...this.props.style,
     ...{
-      left: this.props.left,
+      `${this.props.orientation === 'vertical' ? 'bottom' : 'left'} test`: this.props.offset,
     },
     ...(this.props.disabled ?
       { ...styles.disabledHandle, ...this.props.disabledStyle } :

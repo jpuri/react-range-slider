@@ -11,6 +11,8 @@ import RangeSliderControlled
   from '../RangeSliderControlled'; // eslint-disable-line import/no-unresolved
 import RangeSliderReadOnly
   from '../RangeSliderReadOnly'; // eslint-disable-line import/no-unresolved
+import VerticalSliderUncontrolled
+  from '../VerticalSliderUncontrolled'; // eslint-disable-line import/no-unresolved
 
 export default class Home extends Component {
 
@@ -47,6 +49,7 @@ export default class Home extends Component {
           <RangeSliderUncontrolled />
           <RangeSliderControlled />
           <RangeSliderReadOnly />
+          <VerticalSliderUncontrolled />
         </div>
         <div className={styles.featureSection}>
           <div className={styles.featureText}>Future Plans</div>

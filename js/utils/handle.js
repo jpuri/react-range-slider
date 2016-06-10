@@ -42,7 +42,7 @@ export function calculateStyle(styles, state, props): Object {
     ...styles.handle,
     ...style,
     ...{
-      left,
+      bottom: left,
     },
     ...calcDisabledStyle,
     ...calcHoverStyle,

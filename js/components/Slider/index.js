@@ -27,6 +27,7 @@ export default class Slider extends Component {
     tabIndex: PropTypes.number,
     onChange: PropTypes.func,
     afterChange: PropTypes.func,
+    orientation: PropTypes.string,
     disabled: PropTypes.bool,
     readOnly: PropTypes.bool,
     'aria-labelledby': PropTypes.string,
@@ -51,6 +52,7 @@ export default class Slider extends Component {
     step: 1,
     disabled: false,
     readOnly: false,
+    orientation: 'horizontal',
   };
 
   constructor(props: Object): void {
@@ -76,22 +78,25 @@ export default class Slider extends Component {
     }
     if (properties.style !== this.props.style) {
       this.style = {
-        ...styles.wrapper,
+        ...(this.props.orientation === 'vertical' ? styles.wrapperVertical : styles.wrapper),
         ...properties.wrapperStyle,
       };
     }
   }
 
   factor: number;
-  trackLeft: number;
+  trackOffset: number;
   value: number;
 
   _setFactor: Function = (track: Object): void => {
-    const trackWidth = track.clientWidth;
+    const { orientation } = this.props;
+    const trackLength = orientation === 'vertical' ? track.clientHeight : track.clientWidth;
     this.setState({
-      trackWidth,
+      trackLength,
     });
-    this.trackLeft = track.getBoundingClientRect().left;
+    this.trackOffset = orientation === 'vertical' ?
+      track.getBoundingClientRect().bottom :
+      track.getBoundingClientRect().left;
   };
 
   _setHandleWidth: Function = ({ clientWidth }): void => {
@@ -136,7 +141,7 @@ export default class Slider extends Component {
     if (!disabled && !readOnly) {
       const { value } = this.state;
       const { min } = this.props;
-      const mouseDownPosition = position - this.trackLeft + (min * this.factor);
+      const mouseDownPosition = position - this.trackOffset + (min * this.factor);
       let newValue = this._getStepValue(
         (mouseDownPosition - this.state.handleWidth / 2) / this.factor);
       newValue = this._getValue(newValue);
@@ -188,7 +193,7 @@ export default class Slider extends Component {
   };
 
   style: Object = {
-    ...styles.wrapper,
+    ...(this.props.orientation === 'vertical' ? styles.wrapperVertical : styles.wrapper),
     ...this.props.wrapperStyle,
   };
 
@@ -198,7 +203,7 @@ export default class Slider extends Component {
     this.factor = 1;
     const {
       handleWidth,
-      trackWidth,
+      trackLength,
       value,
     } = this.state;
     const {
@@ -211,6 +216,7 @@ export default class Slider extends Component {
       disabled,
       readOnly,
       trackStyle,
+      orientation,
       disabledTrackStyle,
       handleStyle,
       focusedHandleStyle,
@@ -224,9 +230,9 @@ export default class Slider extends Component {
       disabledHandleClassName,
     } = this.props;
     this.value = getValueOrAlt(value, min);
-    if (trackWidth && handleWidth) {
-      const calculatedTrackWidth = trackWidth - handleWidth;
-      this.factor = calculatedTrackWidth / (max - min);
+    if (trackLength && handleWidth) {
+      const calculatedTrackLength = trackLength - handleWidth;
+      this.factor = calculatedTrackLength / (max - min);
       if (this.value < min) {
         position = min;
       } else if (this.value > max) {
@@ -235,7 +241,7 @@ export default class Slider extends Component {
         position = this.value;
       }
       position = (position - min) * getValueOrAlt(this.factor, 1);
-      percentageFactor = 100 / trackWidth;
+      percentageFactor = 100 / trackLength;
     }
     return (
       <div
@@ -258,19 +264,21 @@ export default class Slider extends Component {
           disabled={disabled}
           trackRef={this._setFactor}
           style={trackStyle}
+          orientation={orientation}
           disabledStyle={disabledTrackStyle}
           className={trackClassName}
           disabledClassName={disabledTrackClassName}
         />
         <Handle
           disabled={disabled}
-          left={`${position * percentageFactor}%`}
+          offset={`${position * percentageFactor}%`}
           tabIndex={disabled ? undefined : tabIndex || 0}
           handleRef={this._setHandleWidth}
           handleMove={this._handleMove}
           afterChange={this._afterChange}
           factor={this.factor}
           step={step}
+          orientation={orientation}
           style={handleStyle}
           focusStyle={focusedHandleStyle}
           hoverStyle={hoveredHandleStyle}

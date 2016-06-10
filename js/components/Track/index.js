@@ -12,12 +12,13 @@ export default class Track extends Component {
     style: PropTypes.object,
     disabledStyle: PropTypes.object,
     disabled: PropTypes.bool,
+    orientation: PropTypes.string,
   };
 
   componentWillReceiveProps(properties: Object): void {
     if (properties.style !== this.props.style) {
       this.style = {
-        ...styles.track,
+        ...(this.props.orientation === 'vertical' ? styles.trackVertical : styles.track),
         ...properties.style,
         ...(properties.disabled ?
           { ...styles.disabledTrack, ...properties.disabledStyle }
@@ -27,7 +28,7 @@ export default class Track extends Component {
   }
 
   style: Object = {
-    ...styles.track,
+    ...(this.props.orientation === 'vertical' ? styles.trackVertical : styles.track),
     ...this.props.style,
     ...(this.props.disabled ?
       { ...styles.disabledTrack, ...this.props.disabledStyle }
