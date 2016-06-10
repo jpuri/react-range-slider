@@ -28,6 +28,7 @@
     "babel-preset-react": "^6.5.0",
     "babel-preset-stage-0": "^6.5.0",
     "chai": "^3.5.0",
+    "classnames": "^2.2.5",
     "css-loader": "^0.23.1",
     "enzyme": "^2.3.0",
     "eslint": "^2.9.0",
@@ -36,6 +37,7 @@
     "eslint-plugin-jsx-a11y": "^1.2.0",
     "eslint-plugin-mocha": "^2.2.0",
     "eslint-plugin-react": "^5.1.1",
+    "exenv": "^1.2.1",
     "express": "^4.13.4",
     "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
@@ -46,13 +48,11 @@
     "react": "^15.0.1",
     "react-addons-test-utils": "^15.0.2",
     "react-dom": "^15.0.1",
-    "classnames": "^2.2.5",
     "rimraf": "^2.5.2",
     "sinon": "^1.17.4",
     "style-loader": "^0.13.1",
     "url-loader": "^0.5.7",
-    "webpack": "^1.13.0",
-    "classnames": "^2.2.5"
+    "webpack": "^1.13.0"
   },
   "repository": {
     "type": "git",
