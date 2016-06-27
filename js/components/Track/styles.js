@@ -1,7 +1,7 @@
 export default {
   track: {
     position: 'absolute',
-    weight: '99%',
+    width: '99%',
     top: 8,
     height: 4,
     borderRadius: 10,

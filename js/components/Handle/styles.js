@@ -10,6 +10,18 @@ export default {
     borderRadius: '50%',
     outline: 'none !important',
   },
+  handleVertical: {
+    position: 'absolute',
+    display: 'inline-block',
+    cursor: 'pointer',
+    height: 20,
+    width: 20,
+    left: 0,
+    backgroundColor: '#f1f1f1',
+    border: '1px solid #b7b3b3',
+    borderRadius: '50%',
+    outline: 'none !important',
+  },
   focusedHandle: {
     border: '1px solid #999999',
   },

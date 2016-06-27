@@ -95,14 +95,18 @@ export default class Slider extends Component {
       trackLength,
     });
     this.trackOffset = orientation === 'vertical' ?
-      track.getBoundingClientRect().bottom :
-      track.getBoundingClientRect().left;
+      track.offsetParent.offsetTop :
+      track.offsetParent.offsetLeft;
   };
 
-  _setHandleWidth: Function = ({ clientWidth }): void => {
-    if (!this.state.handleWidth) {
+  _setHandleSize: Function = (handle): void => {
+    const { orientation } = this.props;
+    const hendleSize = orientation === 'vertical' ?
+      handle.clientHeight :
+      handle.clientWidth;
+    if (!this.state.hendleSize) {
       this.setState({
-        handleWidth: clientWidth,
+        hendleSize,
       });
     }
   };
@@ -120,30 +124,39 @@ export default class Slider extends Component {
   };
 
   _onWrapperMouseDown: Function = (event: Object): void => {
-    const { disabled, readOnly } = this.props;
+    const { disabled, readOnly, orientation } = this.props;
     if (!disabled && !readOnly) {
-      this._moveHandleToPosition(event.pageX);
+      this._moveHandleToPosition(orientation === 'vertical' ? event.pageY : event.pageX);
     }
   };
 
   _onWrapperTouchStart: Function = (event: Object): void => {
-    const { disabled, readOnly } = this.props;
+    const { disabled, readOnly, orientation } = this.props;
     if (!disabled && !readOnly) {
       if (event.touches.length === 1) {
         event.preventDefault();
-        this._moveHandleToPosition(event.touches[0].pageX);
+        this._moveHandleToPosition(
+          orientation === 'vertical' ?
+          event.touches[0].pageY :
+          event.touches[0].pageX
+        );
       }
     }
   };
 
   _moveHandleToPosition: Function = (position: number): void => {
-    const { disabled, readOnly } = this.props;
+    const { disabled, readOnly, orientation } = this.props;
     if (!disabled && !readOnly) {
-      const { value } = this.state;
+      const { value, trackLength } = this.state;
       const { min } = this.props;
-      const mouseDownPosition = position - this.trackOffset + (min * this.factor);
+      let mouseDownPosition;
+      if (orientation === 'vertical') {
+        mouseDownPosition = trackLength - (position - this.trackOffset);
+      } else {
+        mouseDownPosition = position - this.trackOffset + (min * this.factor);
+      }
       let newValue = this._getStepValue(
-        (mouseDownPosition - this.state.handleWidth / 2) / this.factor);
+        (mouseDownPosition - this.state.hendleSize / 2) / this.factor);
       newValue = this._getValue(newValue);
       if (newValue !== getValueOrAlt(value, min)) {
         this._updateState(newValue);
@@ -202,7 +215,7 @@ export default class Slider extends Component {
     let percentageFactor = 1;
     this.factor = 1;
     const {
-      handleWidth,
+      hendleSize,
       trackLength,
       value,
     } = this.state;
@@ -230,8 +243,8 @@ export default class Slider extends Component {
       disabledHandleClassName,
     } = this.props;
     this.value = getValueOrAlt(value, min);
-    if (trackLength && handleWidth) {
-      const calculatedTrackLength = trackLength - handleWidth;
+    if (trackLength && hendleSize) {
+      const calculatedTrackLength = trackLength - hendleSize;
       this.factor = calculatedTrackLength / (max - min);
       if (this.value < min) {
         position = min;
@@ -273,7 +286,7 @@ export default class Slider extends Component {
           disabled={disabled}
           offset={`${position * percentageFactor}%`}
           tabIndex={disabled ? undefined : tabIndex || 0}
-          handleRef={this._setHandleWidth}
+          handleRef={this._setHandleSize}
           handleMove={this._handleMove}
           afterChange={this._afterChange}
           factor={this.factor}

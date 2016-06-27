@@ -30,30 +30,32 @@
   height: 200px;
 }
 .slider {
-  width: 40px !important;
+  width: 32px !important;
 }
 .sliderTrack {
   width: 5px !important;
-  border: 1px solid #31da31 !important;
+  border-radius: 0 !important;
+  border: 1px solid #0a53c3 !important;
   background-color: white !important;
-  top: 12px !important;
+  left: 13px !important;
 }
 .sliderHandle {
-  height: 30px !important;
+  height: 10px !important;
   width: 30px !important;
-  border: 1px solid #2fa92f !important;
-  background-color: #31da31 !important;
+  border-radius: 0 !important;
+  border: 1px solid #052350 !important;
+  background-color: #2771e2 !important;
 }
 .sliderHandle:hover {
-  background-color: white !important;
-  border: 2px solid #2fa92f !important;
-  box-shadow: 0px 0px 5px 0px #31da31 !important;
+  background-color: #2771e2 !important;
+  border: 2px solid #052350 !important;
+  box-shadow: 0px 0px 5px 0px #0a53c3 !important;
 }
 .sliderHandle:active {
-  background-color: white !important;
-  border: 2px solid #2fa92f !important;
-  box-shadow: inset 0px 0px 5px 0px #31da31 !important;
+  background-color: #2771e2 !important;
+  border: 2px solid #052350 !important;
+  box-shadow: inset 0px 0px 5px 0px #0a53c3 !important;
 }
 .sliderHandle:focus {
-  border: 2px solid #2fa92f !important;
+  border: 2px solid #052350 !important;
 }

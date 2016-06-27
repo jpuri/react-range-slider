@@ -20,7 +20,7 @@ export function removeStyle(): void {
 
 export function calculateStyle(styles, state, props): Object {
   const { hovered, focused, active } = state;
-  const { left, style, hoverStyle, focusStyle, activeStyle, disabledStyle, disabled } = props;
+  const { offset, style, hoverStyle, focusStyle, activeStyle, disabledStyle, disabled } = props;
   let calcHoverStyle;
   let calcFocusStyle;
   let calcActiveStyle;
@@ -39,10 +39,10 @@ export function calculateStyle(styles, state, props): Object {
     }
   }
   return {
-    ...styles.handle,
+    ...(props.orientation === 'vertical' ? styles.handleVertical : styles.handle),
     ...style,
     ...{
-      bottom: left,
+      [`${props.orientation === 'vertical' ? 'bottom' : 'left'}`]: offset,
     },
     ...calcDisabledStyle,
     ...calcHoverStyle,
