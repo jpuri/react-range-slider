@@ -44,12 +44,12 @@ export default class Home extends Component {
         </div>
         <div className={styles.examples}>
           <SliderUncontrolled />
+          <VerticalSliderUncontrolled />
           <SliderControlled />
           <SliderDisabled />
           <RangeSliderUncontrolled />
           <RangeSliderControlled />
           <RangeSliderReadOnly />
-          <VerticalSliderUncontrolled />
         </div>
         <div className={styles.featureSection}>
           <div className={styles.featureText}>Future Plans</div>

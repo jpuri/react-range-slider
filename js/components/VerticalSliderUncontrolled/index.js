@@ -21,10 +21,10 @@ export default class VerticalSliderUncontrolled extends Component {
     return (
       <div className={styles.root}>
         <span className={styles.description}>
-          A uncontrolled slider with single handle
+          A uncontrolled vertical-slider with single handle
         </span>
         <span className={styles.info}>
-          parameters - step: 2
+          parameters - step: 2, orientation: vertical
         </span>
         <span className={styles.info}>
           styling using classes
@@ -46,8 +46,8 @@ export default class VerticalSliderUncontrolled extends Component {
         </div>
         <div className={styles.code}>
           <Codemirror
-            value={'<Slider\n  defaultValue={value}\n  ' +
-              'step={2}\n  onChange={this.onChange}\n  ' +
+            value={'<Slider\n  step={2}\n  orientation="vertical"\n  ' +
+              'defaultValue={value}\n  onChange={this.onChange}\n  ' +
               'wrapperClassName={styles.slider}\n  ' +
               'trackClassName={styles.sliderTrack}\n  handleClassName={styles.sliderHandle}\n/>'}
             options={{
