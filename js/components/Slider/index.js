@@ -88,7 +88,7 @@ export default class Slider extends Component {
   trackOffset: number;
   value: number;
 
-  _setFactor: Function = (track: Object): void => {
+  _setTrackDimensions: Function = (track: Object): void => {
     const { orientation } = this.props;
     const trackLength = orientation === 'vertical' ? track.clientHeight : track.clientWidth;
     this.setState({
@@ -275,7 +275,7 @@ export default class Slider extends Component {
       >
         <Track
           disabled={disabled}
-          trackRef={this._setFactor}
+          trackRef={this._setTrackDimensions}
           style={trackStyle}
           orientation={orientation}
           disabledStyle={disabledTrackStyle}

@@ -75,7 +75,7 @@ export default class Handle extends Component {
   };
 
   _getMousePosition: Function =
-    (event, orientation): number => (orientation === 'vertical' ? event.pageY : event.pageX);
+    (obj, orientation): number => (orientation === 'vertical' ? obj.pageY : obj.pageX);
 
   _onMouseDown: Function = (event: Object): void => {
     const { disabled, readOnly, orientation } = this.props;
@@ -110,7 +110,7 @@ export default class Handle extends Component {
     if (!disabled && !readOnly && event.touches.length === 1) {
       event.stopPropagation();
       event.preventDefault();
-      this._moveStart(this._getMousePosition(event, orientation));
+      this._moveStart(this._getMousePosition(event.touches[0], orientation));
     }
   };
 
@@ -119,7 +119,7 @@ export default class Handle extends Component {
     if (!disabled && !readOnly && this.state.active) {
       event.stopPropagation();
       event.preventDefault();
-      this._move(this._getMousePosition(event, orientation));
+      this._move(this._getMousePosition(event.touches[0], orientation));
     }
   };
 
@@ -157,8 +157,7 @@ export default class Handle extends Component {
       incrementFactor = 1;
     }
     const increment = direction > 0 ? 1 : -1;
-    const calculatedFactor = ((factor || 1) * step) / Math.max(1, step / 2);
-    if (direction * distance > calculatedFactor) {
+    if (direction * distance > ((factor || 1) * step)) {
       handleMove(increment);
       this.currentPos += incrementFactor * factor * step * increment;
     }
