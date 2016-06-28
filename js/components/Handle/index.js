@@ -1,7 +1,7 @@
 /* @flow */
 
 import React, { Component, PropTypes } from 'react';
-import { injectStyle, removeStyle, calculateStyle } from '../../utils/handle';
+import { injectStyle, removeStyle, calculateStyle, getMousePosition } from '../../utils/handle';
 import { notSimilar } from '../../utils/common';
 import styles from './styles';
 
@@ -74,20 +74,17 @@ export default class Handle extends Component {
     }
   };
 
-  _getMousePosition: Function =
-    (obj, orientation): number => (orientation === 'vertical' ? obj.pageY : obj.pageX);
-
   _onMouseDown: Function = (event: Object): void => {
     const { disabled, readOnly, orientation } = this.props;
     if (!disabled && !readOnly) {
-      this._moveStart(this._getMousePosition(event, orientation));
+      this._moveStart(getMousePosition(event, orientation));
     }
   };
 
   _onDocumentMouseMove: Function = (event: Object): void => {
     const { disabled, readOnly, orientation } = this.props;
     if (!disabled && !readOnly && this.state.active) {
-      this._move(this._getMousePosition(event, orientation));
+      this._move(getMousePosition(event, orientation));
     }
   };
 
@@ -110,7 +107,7 @@ export default class Handle extends Component {
     if (!disabled && !readOnly && event.touches.length === 1) {
       event.stopPropagation();
       event.preventDefault();
-      this._moveStart(this._getMousePosition(event.touches[0], orientation));
+      this._moveStart(getMousePosition(event.touches[0], orientation));
     }
   };
 
@@ -119,7 +116,7 @@ export default class Handle extends Component {
     if (!disabled && !readOnly && this.state.active) {
       event.stopPropagation();
       event.preventDefault();
-      this._move(this._getMousePosition(event.touches[0], orientation));
+      this._move(getMousePosition(event.touches[0], orientation));
     }
   };
 

@@ -18,7 +18,7 @@ export function removeStyle(): void {
   }
 }
 
-export function calculateStyle(styles, state, props): Object {
+export function calculateStyle(styles: Object, state: Object, props: Object): Object {
   const { hovered, focused, active } = state;
   const { offset, style, hoverStyle, focusStyle, activeStyle, disabledStyle, disabled } = props;
   let calcHoverStyle;
@@ -49,4 +49,8 @@ export function calculateStyle(styles, state, props): Object {
     ...calcFocusStyle,
     ...calcActiveStyle,
   };
+}
+
+export function getMousePosition(obj: Object, orientation: string): number {
+  return orientation === 'vertical' ? obj.pageY : obj.pageX;
 }
