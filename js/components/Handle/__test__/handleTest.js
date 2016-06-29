@@ -52,10 +52,10 @@ describe('Handle test suite', () => {
     assert.isTrue(handleRef.calledOnce);
   });
 
-  it('should add props values of left and right to the component styles', () => {
+  it('should add props values of left to the component styles', () => {
     const handle = mount(
       <Handle
-        left={10}
+        offset={10}
         factor={1}
         handleRef={() => {}}
         handleMove={() => {}}
@@ -65,10 +65,24 @@ describe('Handle test suite', () => {
     expect(handle.node.style.left).to.equal(10);
   });
 
+  it('should add props values of bottom to the component styles for vertical orientation', () => {
+    const handle = mount(
+      <Handle
+        offset={10}
+        factor={1}
+        orientation="vertical"
+        handleRef={() => {}}
+        handleMove={() => {}}
+        afterChange={() => {}}
+      />
+    );
+    expect(handle.node.style.bottom).to.equal(10);
+  });
+
   it('should set state to active when mouse is down', () => {
     const handle = mount(
       <Handle
-        left={10}
+        offset={10}
         right={50}
         factor={1}
         handleRef={() => {}}

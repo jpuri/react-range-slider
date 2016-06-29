@@ -15,10 +15,17 @@ describe('HighlightedTrack test suite', () => {
     assert.isTrue(getReactClassNames(highlightedTrack).indexOf('testClassName') > 0);
   });
 
-  it('should add left and width props to style', () => {
-    const highlightedTrack = mount(<HighlightedTrack left={20} width={10} />);
+  it('should add left and width props to node', () => {
+    const highlightedTrack = mount(<HighlightedTrack offset={20} length={10} />);
     expect(highlightedTrack.node.style.left).to.equal(20);
     expect(highlightedTrack.node.style.width).to.equal(10);
+  });
+
+  it('should add bottom and height props to node for vertical orientation', () => {
+    const highlightedTrack =
+      mount(<HighlightedTrack offset={20} length={10} orientation="vertical" />);
+    expect(highlightedTrack.node.style.bottom).to.equal(20);
+    expect(highlightedTrack.node.style.height).to.equal(10);
   });
 
   it('should add disabledClass if component is disabled', () => {

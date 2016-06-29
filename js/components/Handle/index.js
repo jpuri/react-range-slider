@@ -77,14 +77,14 @@ export default class Handle extends Component {
   _onMouseDown: Function = (event: Object): void => {
     const { disabled, readOnly, orientation } = this.props;
     if (!disabled && !readOnly) {
-      this._moveStart(getMousePosition(event, orientation));
+      this._moveStart(event, getMousePosition(event, orientation));
     }
   };
 
   _onDocumentMouseMove: Function = (event: Object): void => {
     const { disabled, readOnly, orientation } = this.props;
     if (!disabled && !readOnly && this.state.active) {
-      this._move(getMousePosition(event, orientation));
+      this._move(event, getMousePosition(event, orientation));
     }
   };
 
@@ -105,18 +105,14 @@ export default class Handle extends Component {
   _onTouchStart: Function = (event: Object): void => {
     const { disabled, readOnly, orientation } = this.props;
     if (!disabled && !readOnly && event.touches.length === 1) {
-      event.stopPropagation();
-      event.preventDefault();
-      this._moveStart(getMousePosition(event.touches[0], orientation));
+      this._moveStart(event, getMousePosition(event.touches[0], orientation));
     }
   };
 
   _onTouchMove: Function = (event: Object): void => {
     const { disabled, readOnly, orientation } = this.props;
     if (!disabled && !readOnly && this.state.active) {
-      event.stopPropagation();
-      event.preventDefault();
-      this._move(getMousePosition(event.touches[0], orientation));
+      this._move(event, getMousePosition(event.touches[0], orientation));
     }
   };
 
@@ -130,7 +126,9 @@ export default class Handle extends Component {
     }
   };
 
-  _moveStart: Function = (position: number): void => {
+  _moveStart: Function = (event: Object, position: number): void => {
+    event.preventDefault();
+    event.stopPropagation();
     this.style = calculateStyle(styles, { ...this.state, ...{ active: true } }, this.props);
     this.currentPos = position;
     this.lastPos = position;
@@ -139,7 +137,9 @@ export default class Handle extends Component {
     });
   };
 
-  _move: Function = (position: number): void => {
+  _move: Function = (event: Object, position: number): void => {
+    event.preventDefault();
+    event.stopPropagation();
     const { factor, step, handleMove, orientation } = this.props;
     let direction;
     let distance;

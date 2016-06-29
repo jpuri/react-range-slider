@@ -5,8 +5,13 @@ import { calculateStyle } from '../handle';
 
 describe('HandleUtils: calculateStyle function test suite', () => {
   it('should add props.left to styles', () => {
-    const obj = calculateStyle({}, {}, { left: 50 });
+    const obj = calculateStyle({}, {}, { offset: 50 });
     assert.equal(obj.left, 50);
+  });
+
+  it('should add props.bottom to styles if orientation is vertical', () => {
+    const obj = calculateStyle({}, {}, { offset: 50, orientation: 'vertical' });
+    assert.equal(obj.bottom, 50);
   });
 
   it('should add focus styles if component is focused', () => {

@@ -95,8 +95,8 @@ export default class Slider extends Component {
       trackLength,
     });
     this.trackOffset = orientation === 'vertical' ?
-      track.offsetParent.offsetTop :
-      track.offsetParent.offsetLeft;
+      track.offsetParent && track.offsetParent.offsetTop :
+      track.offsetParent && track.offsetParent.offsetLeft;
   };
 
   _setHandleSize: Function = (handle): void => {
@@ -269,7 +269,7 @@ export default class Slider extends Component {
         aria-valuemin={min}
         aria-valuemax={max}
         aria-valuetext={value}
-        aria-orientation="horizontal"
+        aria-orientation={orientation}
         aria-disabled={disabled}
         aria-readonly={readOnly}
       >
