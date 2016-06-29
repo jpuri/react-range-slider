@@ -13,6 +13,8 @@ import RangeSliderReadOnly
   from '../RangeSliderReadOnly'; // eslint-disable-line import/no-unresolved
 import VerticalSliderUncontrolled
   from '../VerticalSliderUncontrolled'; // eslint-disable-line import/no-unresolved
+  import VerticalRangeSliderUncontrolled
+    from '../VerticalRangeSliderUncontrolled'; // eslint-disable-line import/no-unresolved
 
 export default class Home extends Component {
 
@@ -48,6 +50,7 @@ export default class Home extends Component {
           <SliderControlled />
           <SliderDisabled />
           <RangeSliderUncontrolled />
+          <VerticalRangeSliderUncontrolled />
           <RangeSliderControlled />
           <RangeSliderReadOnly />
         </div>
