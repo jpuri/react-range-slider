@@ -12,22 +12,25 @@ export default class HighlightedTrack extends Component {
     className: PropTypes.string,
     disabledClassName: PropTypes.string,
     disabled: PropTypes.bool,
-    left: PropTypes.string.isRequired,
-    width: PropTypes.string.isRequired,
+    offset: PropTypes.string.isRequired,
+    length: PropTypes.string.isRequired,
+    orientation: PropTypes.string,
   };
 
   componentWillReceiveProps(properties: Object): void {
     if (notSimilar(
       properties,
       this.props,
-      ['left', 'style', 'width']
+      ['offset', 'style', 'length']
     )) {
+      const { orientation, offset, length, style } = properties;
       this.style = {
-        ...styles.highlightedTrack,
-        ...properties.style,
+        ...(orientation === 'vertical' ?
+          styles.highlightedTrackVertical : styles.highlightedTrack),
+        ...style,
         ...{
-          left: properties.left,
-          width: properties.width,
+          [`${orientation === 'vertical' ? 'bottom' : 'left'}`]: offset,
+          [`${orientation === 'vertical' ? 'height' : 'width'}`]: length,
         },
         ...(this.props.disabled ?
           { ...styles.disabledHighlightedTrack, ...this.props.disabledStyle }
@@ -37,11 +40,12 @@ export default class HighlightedTrack extends Component {
   }
 
   style: Object = {
-    ...styles.highlightedTrack,
+    ...(this.props.orientation === 'vertical' ?
+      styles.highlightedTrackVertical : styles.highlightedTrack),
     ...this.props.style,
     ...{
-      left: this.props.left,
-      width: this.props.width,
+      [`${this.props.orientation === 'vertical' ? 'bottom' : 'left'}`]: this.props.offset,
+      [`${this.props.orientation === 'vertical' ? 'height' : 'width'}`]: this.props.length,
     },
     ...(this.props.disabled ?
       { ...styles.disabledHighlightedTrack, ...this.props.disabledStyle }

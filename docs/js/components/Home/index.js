@@ -11,6 +11,10 @@ import RangeSliderControlled
   from '../RangeSliderControlled'; // eslint-disable-line import/no-unresolved
 import RangeSliderReadOnly
   from '../RangeSliderReadOnly'; // eslint-disable-line import/no-unresolved
+import VerticalSliderUncontrolled
+  from '../VerticalSliderUncontrolled'; // eslint-disable-line import/no-unresolved
+import VerticalRangeSliderUncontrolled
+  from '../VerticalRangeSliderUncontrolled'; // eslint-disable-line import/no-unresolved
 
 export default class Home extends Component {
 
@@ -35,6 +39,7 @@ export default class Home extends Component {
           <div className={styles.featureText}>Features</div>
           <ul className={styles.list}>
             <li>Support for both mobile and desktop devices</li>
+            <li>Works in vertical and horizontal orientation</li>
             <li>Cutomizable styling</li>
             <li>Responsive to keyboard events</li>
             <li>ARIA support</li>
@@ -42,9 +47,11 @@ export default class Home extends Component {
         </div>
         <div className={styles.examples}>
           <SliderUncontrolled />
+          <VerticalSliderUncontrolled />
           <SliderControlled />
           <SliderDisabled />
           <RangeSliderUncontrolled />
+          <VerticalRangeSliderUncontrolled />
           <RangeSliderControlled />
           <RangeSliderReadOnly />
         </div>
@@ -52,8 +59,8 @@ export default class Home extends Component {
           <div className={styles.featureText}>Future Plans</div>
           <ul className={styles.list}>
             <li>
-              I plan to develop it into a complete set of slider components.
-              I will soon add to it vertical slider and vertical range slider.
+              I plan to add to the collection more variety of slider
+              and also improve current sliders and add more features to them.
             </li>
           </ul>
         </div>

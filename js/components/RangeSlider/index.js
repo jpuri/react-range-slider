@@ -28,6 +28,7 @@ export default class RangeSlider extends Component {
     tabIndex: PropTypes.number,
     onChange: PropTypes.func,
     afterChange: PropTypes.func,
+    orientation: PropTypes.string,
     disabled: PropTypes.bool,
     readOnly: PropTypes.bool,
     'aria-labelledby': PropTypes.string,
@@ -56,6 +57,7 @@ export default class RangeSlider extends Component {
     step: 1,
     disabled: false,
     readOnly: false,
+    orientation: 'horizontal',
   };
 
   constructor(props: Object): void {
@@ -74,8 +76,8 @@ export default class RangeSlider extends Component {
     this.state = {
       start,
       end,
-      startHandleWidth: 0,
-      endHandleWidth: 0,
+      startHandleSize: 0,
+      endHandleSize: 0,
     };
   }
 
@@ -90,7 +92,7 @@ export default class RangeSlider extends Component {
     }
     if (properties.style !== this.props.style) {
       this.style = {
-        ...styles.wrapper,
+        ...(this.props.orientation === 'vertical' ? styles.wrapperVertical : styles.wrapper),
         ...properties.wrapperStyle,
       };
     }
@@ -100,19 +102,27 @@ export default class RangeSlider extends Component {
   trackLeft: number;
   start: number;
   end: number;
+  trackOffset: number;
 
-  _setFactor: Function = (track: Object): void => {
-    const trackWidth = track.clientWidth;
+  _setTrackDimensions: Function = (track: Object): void => {
+    const { orientation } = this.props;
+    const trackLength = orientation === 'vertical' ? track.clientHeight : track.clientWidth;
     this.setState({
-      trackWidth,
+      trackLength,
     });
-    this.trackLeft = track.getBoundingClientRect().left;
+    this.trackOffset = orientation === 'vertical' ?
+      track.offsetParent && track.offsetParent.offsetTop :
+      track.offsetParent && track.offsetParent.offsetLeft;
   };
 
-  _setHandleWidth: Function = ({ clientWidth }): void => {
-    if (!this.state.handleWidth) {
+  _setHandleSize: Function = (handle): void => {
+    const { orientation } = this.props;
+    const handleSize = orientation === 'vertical' ?
+      handle.clientHeight :
+      handle.clientWidth;
+    if (!this.state.handleSize) {
       this.setState({
-        handleWidth: clientWidth,
+        handleSize,
       });
     }
   };
@@ -142,34 +152,43 @@ export default class RangeSlider extends Component {
   };
 
   _onWrapperMouseDown: Function = (event: Object): void => {
-    const { disabled, readOnly } = this.props;
+    const { disabled, readOnly, orientation } = this.props;
     if (!disabled && !readOnly) {
-      this._moveHandleToPosition(event.pageX);
+      this._moveHandleToPosition(orientation === 'vertical' ? event.pageY : event.pageX);
     }
   };
 
   _onWrapperTouchStart: Function = (event: Object): void => {
-    const { disabled, readOnly } = this.props;
+    const { disabled, readOnly, orientation } = this.props;
     if (!disabled && !readOnly) {
       if (event.touches.length === 1) {
         event.preventDefault();
-        this._moveHandleToPosition(event.touches[0].pageX);
+        this._moveHandleToPosition(
+          orientation === 'vertical' ?
+          event.touches[0].pageY :
+          event.touches[0].pageX
+        );
       }
     }
   };
 
   _moveHandleToPosition: Function = (position: number): void => {
-    const { disabled, readOnly } = this.props;
+    const { disabled, readOnly, orientation } = this.props;
     if (!disabled && !readOnly) {
-      const { start, end } = this.state;
+      const { start, end, trackLength } = this.state;
       const { min, max } = this.props;
       const startPosition = getValueOrAlt(start, min) * this.factor;
       const endPosition = getValueOrAlt(end, max) * this.factor;
-      const mouseDownPosition = position - this.trackLeft + (min * this.factor);
+      let mouseDownPosition;
+      if (orientation === 'vertical') {
+        mouseDownPosition = trackLength - (position - this.trackOffset);
+      } else {
+        mouseDownPosition = position - this.trackOffset + (min * this.factor);
+      }
       if (Math.abs(mouseDownPosition - startPosition) < Math.abs(mouseDownPosition - endPosition) ||
         mouseDownPosition < startPosition) {
         let newStart = this._getStepValue(
-          (mouseDownPosition - this.state.handleWidth / 2) / this.factor);
+          (mouseDownPosition - this.state.handleSize / 2) / this.factor);
         newStart = this._getStartValue(newStart);
         if (newStart !== getValueOrAlt(start, min)) {
           this._updateState(newStart, end);
@@ -178,7 +197,7 @@ export default class RangeSlider extends Component {
         }
       } else {
         let newEnd = this._getStepValue(
-          (mouseDownPosition - this.state.handleWidth / 2) / this.factor);
+          (mouseDownPosition - this.state.handleSize / 2) / this.factor);
         newEnd = this._getEndValue(newEnd);
         if (newEnd !== getValueOrAlt(end, max)) {
           this._updateState(start, newEnd);
@@ -246,7 +265,7 @@ export default class RangeSlider extends Component {
   };
 
   style: Object = {
-    ...styles.wrapper,
+    ...(this.props.orientation === 'vertical' ? styles.wrapperVertical : styles.wrapper),
     ...this.props.wrapperStyle,
   };
 
@@ -256,8 +275,8 @@ export default class RangeSlider extends Component {
     let percentageFactor = 1;
     this.factor = 1;
     const {
-      handleWidth,
-      trackWidth,
+      handleSize,
+      trackLength,
       start,
       end,
     } = this.state;
@@ -271,6 +290,7 @@ export default class RangeSlider extends Component {
       disabled,
       readOnly,
       trackStyle,
+      orientation,
       disabledTrackStyle,
       highlightedTrackStyle,
       disabledHighlightedTrackStyle,
@@ -289,8 +309,8 @@ export default class RangeSlider extends Component {
     } = this.props;
     this.start = getValueOrAlt(start, min);
     this.end = getValueOrAlt(end, max);
-    if (trackWidth && handleWidth) {
-      const calculatedTrackWidth = trackWidth - handleWidth;
+    if (trackLength && handleSize) {
+      const calculatedTrackWidth = trackLength - handleSize;
       this.factor = calculatedTrackWidth / (max - min);
       if (this.start < min || this.end < min) {
         startValue = min;
@@ -308,7 +328,7 @@ export default class RangeSlider extends Component {
         endValue = this.end;
       }
       endValue = (endValue - min) * getValueOrAlt(this.factor, 1);
-      percentageFactor = 100 / trackWidth;
+      percentageFactor = 100 / trackLength;
     }
     return (
       <div
@@ -323,7 +343,7 @@ export default class RangeSlider extends Component {
         aria-valuemin={min}
         aria-valuemax={max}
         aria-valuetext={`${start} - ${end}`}
-        aria-orientation="horizontal"
+        aria-orientation={orientation}
         aria-disabled={disabled}
         aria-readonly={readOnly}
       >
@@ -331,31 +351,34 @@ export default class RangeSlider extends Component {
           style={trackStyle}
           disabledStyle={disabledTrackStyle}
           disabled={disabled}
-          trackRef={this._setFactor}
+          orientation={orientation}
+          trackRef={this._setTrackDimensions}
           className={trackClassName}
           disabledClassName={disabledTrackClassName}
         />
         <HighlightedTrack
           disabled={disabled}
+          orientation={orientation}
           style={highlightedTrackStyle}
           disabledStyle={disabledHighlightedTrackStyle}
           className={highlightedTrackClassName}
-          left={`${startValue * percentageFactor}%`}
-          width={`${(endValue - startValue) * percentageFactor}%`}
+          offset={`${startValue * percentageFactor}%`}
+          length={`${(endValue - startValue) * percentageFactor}%`}
           className={highlightedTrackClassName}
           disabledClassName={disabledHighlightedTrackClassName}
         />
         <Handle
           disabled={disabled}
           readOnly={readOnly}
-          left={`${startValue * percentageFactor}%`}
+          offset={`${startValue * percentageFactor}%`}
           tabIndex={disabled ? undefined : tabIndex || 0}
-          handleRef={this._setHandleWidth}
+          handleRef={this._setHandleSize}
           handleMove={this._startHandleMove}
           afterChange={this._afterChange}
           factor={this.factor}
           step={step}
           style={handleStyle}
+          orientation={orientation}
           focusStyle={focusedHandleStyle}
           hoverStyle={hoveredHandleStyle}
           activeStyle={activeHandleStyle}
@@ -366,14 +389,15 @@ export default class RangeSlider extends Component {
         <Handle
           disabled={disabled}
           readOnly={readOnly}
-          left={`${endValue * percentageFactor}%`}
+          offset={`${endValue * percentageFactor}%`}
           tabIndex={disabled ? undefined : tabIndex || 0}
-          handleRef={this._setHandleWidth}
+          handleRef={this._setHandleSize}
           handleMove={this._endHandleMove}
           afterChange={this._afterChange}
           factor={this.factor}
           step={step}
           style={handleStyle}
+          orientation={orientation}
           focusStyle={focusedHandleStyle}
           hoverStyle={hoveredHandleStyle}
           activeStyle={activeHandleStyle}

@@ -1,18 +1,19 @@
 /* @flow */
 
 import React, { Component, PropTypes } from 'react';
-import { injectStyle, removeStyle, calculateStyle } from '../../utils/handle';
+import { injectStyle, removeStyle, calculateStyle, getMousePosition } from '../../utils/handle';
 import { notSimilar } from '../../utils/common';
 import styles from './styles';
 
 export default class Handle extends Component {
 
   static propTypes = {
-    left: PropTypes.string,
+    offset: PropTypes.string,
     factor: PropTypes.number.isRequired,
     handleRef: PropTypes.func.isRequired,
     handleMove: PropTypes.func.isRequired,
     afterChange: PropTypes.func.isRequired,
+    orientation: PropTypes.string,
     tabIndex: PropTypes.number,
     disabled: PropTypes.bool,
     readOnly: PropTypes.bool,
@@ -45,7 +46,7 @@ export default class Handle extends Component {
     if (notSimilar(
       properties,
       this.props,
-      ['left', 'style', 'hoverStyle', 'focusStyle', 'activeStyle']
+      ['offset', 'style', 'hoverStyle', 'focusStyle', 'activeStyle']
     )) {
       this.style = calculateStyle(styles, this.state, properties);
     }
@@ -74,16 +75,16 @@ export default class Handle extends Component {
   };
 
   _onMouseDown: Function = (event: Object): void => {
-    const { disabled, readOnly } = this.props;
+    const { disabled, readOnly, orientation } = this.props;
     if (!disabled && !readOnly) {
-      this._moveStart(event.pageX);
+      this._moveStart(event, getMousePosition(event, orientation));
     }
   };
 
   _onDocumentMouseMove: Function = (event: Object): void => {
-    const { disabled, readOnly } = this.props;
+    const { disabled, readOnly, orientation } = this.props;
     if (!disabled && !readOnly && this.state.active) {
-      this._move(event.pageX);
+      this._move(event, getMousePosition(event, orientation));
     }
   };
 
@@ -102,20 +103,16 @@ export default class Handle extends Component {
   };
 
   _onTouchStart: Function = (event: Object): void => {
-    const { disabled, readOnly } = this.props;
+    const { disabled, readOnly, orientation } = this.props;
     if (!disabled && !readOnly && event.touches.length === 1) {
-      event.stopPropagation();
-      event.preventDefault();
-      this._moveStart(event.touches[0].pageX);
+      this._moveStart(event, getMousePosition(event.touches[0], orientation));
     }
   };
 
   _onTouchMove: Function = (event: Object): void => {
-    const { disabled, readOnly } = this.props;
+    const { disabled, readOnly, orientation } = this.props;
     if (!disabled && !readOnly && this.state.active) {
-      event.stopPropagation();
-      event.preventDefault();
-      this._move(event.touches[0].pageX);
+      this._move(event, getMousePosition(event.touches[0], orientation));
     }
   };
 
@@ -129,7 +126,9 @@ export default class Handle extends Component {
     }
   };
 
-  _moveStart: Function = (position: number): void => {
+  _moveStart: Function = (event: Object, position: number): void => {
+    event.preventDefault();
+    event.stopPropagation();
     this.style = calculateStyle(styles, { ...this.state, ...{ active: true } }, this.props);
     this.currentPos = position;
     this.lastPos = position;
@@ -138,15 +137,26 @@ export default class Handle extends Component {
     });
   };
 
-  _move: Function = (position: number): void => {
-    const { factor, step, handleMove } = this.props;
-    const direction = position - this.lastPos;
-    const distance = position - this.currentPos;
+  _move: Function = (event: Object, position: number): void => {
+    event.preventDefault();
+    event.stopPropagation();
+    const { factor, step, handleMove, orientation } = this.props;
+    let direction;
+    let distance;
+    let incrementFactor;
+    if (orientation === 'vertical') {
+      direction = this.lastPos - position;
+      distance = this.currentPos - position;
+      incrementFactor = -1;
+    } else {
+      direction = position - this.lastPos;
+      distance = position - this.currentPos;
+      incrementFactor = 1;
+    }
     const increment = direction > 0 ? 1 : -1;
-    const calculatedFactor = ((factor || 1) * step) / Math.max(1, step / 2);
-    if (direction * distance > calculatedFactor) {
+    if (direction * distance > ((factor || 1) * step)) {
       handleMove(increment);
-      this.currentPos += factor * step * increment;
+      this.currentPos += incrementFactor * factor * step * increment;
     }
     this.lastPos = position;
   };
@@ -192,10 +202,10 @@ export default class Handle extends Component {
   currentPos: number;
   lastPos: number;
   style: Object = {
-    ...styles.handle,
+    ...(this.props.orientation === 'vertical' ? styles.handleVertical : styles.handle),
     ...this.props.style,
     ...{
-      left: this.props.left,
+      [`${this.props.orientation === 'vertical' ? 'bottom' : 'left'}`]: this.props.offset,
     },
     ...(this.props.disabled ?
       { ...styles.disabledHandle, ...this.props.disabledStyle } :

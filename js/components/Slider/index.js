@@ -27,6 +27,7 @@ export default class Slider extends Component {
     tabIndex: PropTypes.number,
     onChange: PropTypes.func,
     afterChange: PropTypes.func,
+    orientation: PropTypes.string,
     disabled: PropTypes.bool,
     readOnly: PropTypes.bool,
     'aria-labelledby': PropTypes.string,
@@ -51,6 +52,7 @@ export default class Slider extends Component {
     step: 1,
     disabled: false,
     readOnly: false,
+    orientation: 'horizontal',
   };
 
   constructor(props: Object): void {
@@ -76,28 +78,35 @@ export default class Slider extends Component {
     }
     if (properties.style !== this.props.style) {
       this.style = {
-        ...styles.wrapper,
+        ...(this.props.orientation === 'vertical' ? styles.wrapperVertical : styles.wrapper),
         ...properties.wrapperStyle,
       };
     }
   }
 
   factor: number;
-  trackLeft: number;
+  trackOffset: number;
   value: number;
 
-  _setFactor: Function = (track: Object): void => {
-    const trackWidth = track.clientWidth;
+  _setTrackDimensions: Function = (track: Object): void => {
+    const { orientation } = this.props;
+    const trackLength = orientation === 'vertical' ? track.clientHeight : track.clientWidth;
     this.setState({
-      trackWidth,
+      trackLength,
     });
-    this.trackLeft = track.getBoundingClientRect().left;
+    this.trackOffset = orientation === 'vertical' ?
+      track.offsetParent && track.offsetParent.offsetTop :
+      track.offsetParent && track.offsetParent.offsetLeft;
   };
 
-  _setHandleWidth: Function = ({ clientWidth }): void => {
-    if (!this.state.handleWidth) {
+  _setHandleSize: Function = (handle): void => {
+    const { orientation } = this.props;
+    const hendleSize = orientation === 'vertical' ?
+      handle.clientHeight :
+      handle.clientWidth;
+    if (!this.state.hendleSize) {
       this.setState({
-        handleWidth: clientWidth,
+        hendleSize,
       });
     }
   };
@@ -115,30 +124,39 @@ export default class Slider extends Component {
   };
 
   _onWrapperMouseDown: Function = (event: Object): void => {
-    const { disabled, readOnly } = this.props;
+    const { disabled, readOnly, orientation } = this.props;
     if (!disabled && !readOnly) {
-      this._moveHandleToPosition(event.pageX);
+      this._moveHandleToPosition(orientation === 'vertical' ? event.pageY : event.pageX);
     }
   };
 
   _onWrapperTouchStart: Function = (event: Object): void => {
-    const { disabled, readOnly } = this.props;
+    const { disabled, readOnly, orientation } = this.props;
     if (!disabled && !readOnly) {
       if (event.touches.length === 1) {
         event.preventDefault();
-        this._moveHandleToPosition(event.touches[0].pageX);
+        this._moveHandleToPosition(
+          orientation === 'vertical' ?
+          event.touches[0].pageY :
+          event.touches[0].pageX
+        );
       }
     }
   };
 
   _moveHandleToPosition: Function = (position: number): void => {
-    const { disabled, readOnly } = this.props;
+    const { disabled, readOnly, orientation } = this.props;
     if (!disabled && !readOnly) {
-      const { value } = this.state;
+      const { value, trackLength } = this.state;
       const { min } = this.props;
-      const mouseDownPosition = position - this.trackLeft + (min * this.factor);
+      let mouseDownPosition;
+      if (orientation === 'vertical') {
+        mouseDownPosition = trackLength - (position - this.trackOffset);
+      } else {
+        mouseDownPosition = position - this.trackOffset + (min * this.factor);
+      }
       let newValue = this._getStepValue(
-        (mouseDownPosition - this.state.handleWidth / 2) / this.factor);
+        (mouseDownPosition - this.state.hendleSize / 2) / this.factor);
       newValue = this._getValue(newValue);
       if (newValue !== getValueOrAlt(value, min)) {
         this._updateState(newValue);
@@ -188,7 +206,7 @@ export default class Slider extends Component {
   };
 
   style: Object = {
-    ...styles.wrapper,
+    ...(this.props.orientation === 'vertical' ? styles.wrapperVertical : styles.wrapper),
     ...this.props.wrapperStyle,
   };
 
@@ -197,8 +215,8 @@ export default class Slider extends Component {
     let percentageFactor = 1;
     this.factor = 1;
     const {
-      handleWidth,
-      trackWidth,
+      hendleSize,
+      trackLength,
       value,
     } = this.state;
     const {
@@ -211,6 +229,7 @@ export default class Slider extends Component {
       disabled,
       readOnly,
       trackStyle,
+      orientation,
       disabledTrackStyle,
       handleStyle,
       focusedHandleStyle,
@@ -224,9 +243,9 @@ export default class Slider extends Component {
       disabledHandleClassName,
     } = this.props;
     this.value = getValueOrAlt(value, min);
-    if (trackWidth && handleWidth) {
-      const calculatedTrackWidth = trackWidth - handleWidth;
-      this.factor = calculatedTrackWidth / (max - min);
+    if (trackLength && hendleSize) {
+      const calculatedTrackLength = trackLength - hendleSize;
+      this.factor = calculatedTrackLength / (max - min);
       if (this.value < min) {
         position = min;
       } else if (this.value > max) {
@@ -235,7 +254,7 @@ export default class Slider extends Component {
         position = this.value;
       }
       position = (position - min) * getValueOrAlt(this.factor, 1);
-      percentageFactor = 100 / trackWidth;
+      percentageFactor = 100 / trackLength;
     }
     return (
       <div
@@ -250,27 +269,29 @@ export default class Slider extends Component {
         aria-valuemin={min}
         aria-valuemax={max}
         aria-valuetext={value}
-        aria-orientation="horizontal"
+        aria-orientation={orientation}
         aria-disabled={disabled}
         aria-readonly={readOnly}
       >
         <Track
           disabled={disabled}
-          trackRef={this._setFactor}
+          trackRef={this._setTrackDimensions}
           style={trackStyle}
+          orientation={orientation}
           disabledStyle={disabledTrackStyle}
           className={trackClassName}
           disabledClassName={disabledTrackClassName}
         />
         <Handle
           disabled={disabled}
-          left={`${position * percentageFactor}%`}
+          offset={`${position * percentageFactor}%`}
           tabIndex={disabled ? undefined : tabIndex || 0}
-          handleRef={this._setHandleWidth}
+          handleRef={this._setHandleSize}
           handleMove={this._handleMove}
           afterChange={this._afterChange}
           factor={this.factor}
           step={step}
+          orientation={orientation}
           style={handleStyle}
           focusStyle={focusedHandleStyle}
           hoverStyle={hoveredHandleStyle}
