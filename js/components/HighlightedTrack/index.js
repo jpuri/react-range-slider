@@ -53,7 +53,6 @@ export default class HighlightedTrack extends Component {
   };
 
   render(): Object {
-    console.log('this.props.offset', this.style)
     const { className, disabledClassName, disabled } = this.props;
     return (
       <div

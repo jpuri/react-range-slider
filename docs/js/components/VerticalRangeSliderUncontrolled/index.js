@@ -35,9 +35,6 @@ export default class VerticalRangeSliderUncontrolled extends Component {
             value={value}
             orientation="vertical"
             onChange={this.onChange}
-            wrapperClassName={styles.slider}
-            trackClassName={styles.sliderTrack}
-            highlightedTrackClassName={styles.sliderHighlightedTrack}
             handleClassName={styles.sliderHandle}
           />
         </div>
@@ -49,9 +46,7 @@ export default class VerticalRangeSliderUncontrolled extends Component {
           <Codemirror
             value={'<RangeSlider\n  step={2}\n  value={value}\n  ' +
             'onChange={this.onChange}\n  ' +
-            'orientation="vertical"\n  wrapperClassName={styles.slider}\n  ' +
-            'highlightedTrackClassName={styles.sliderHighlightedTrack}\n  ' +
-            'trackClassName={styles.sliderTrack}\n  handleClassName={styles.sliderHandle}\n/>'}
+            'orientation="vertical"\n  handleClassName={styles.sliderHandle}\n/>'}
             options={{
               lineNumbers: true,
               mode: 'jsx',

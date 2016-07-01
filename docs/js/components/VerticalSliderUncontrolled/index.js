@@ -35,8 +35,6 @@ export default class VerticalSliderUncontrolled extends Component {
             orientation="vertical"
             defaultValue={value}
             onChange={this.onChange}
-            wrapperClassName={styles.slider}
-            trackClassName={styles.sliderTrack}
             handleClassName={styles.sliderHandle}
           />
         </div>
@@ -48,8 +46,7 @@ export default class VerticalSliderUncontrolled extends Component {
           <Codemirror
             value={'<Slider\n  step={2}\n  orientation="vertical"\n  ' +
               'defaultValue={value}\n  onChange={this.onChange}\n  ' +
-              'wrapperClassName={styles.slider}\n  ' +
-              'trackClassName={styles.sliderTrack}\n  handleClassName={styles.sliderHandle}\n/>'}
+              'handleClassName={styles.sliderHandle}\n/>'}
             options={{
               lineNumbers: true,
               mode: 'jsx',

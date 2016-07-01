@@ -4,8 +4,8 @@ export default {
     width: '100%',
     top: 13,
     height: 4,
-    backgroundColor: '#71e4db',
-    border: '1px solid #28b6ef',
+    backgroundColor: '#99c1ff',
+    border: '1px solid #2771e2',
   },
   highlightedTrackVertical: {
     position: 'absolute',
@@ -13,8 +13,8 @@ export default {
     left: 14,
     width: 4,
     borderRadius: 10,
-    backgroundColor: '#71e4db',
-    border: '1px solid #28b6ef',
+    backgroundColor: '#99c1ff',
+    border: '1px solid #2771e2',
   },
   disabledHighlightedTrack: {
     opacity: '0.3',
