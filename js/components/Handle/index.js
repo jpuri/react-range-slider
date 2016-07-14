@@ -127,7 +127,7 @@ export default class Handle extends Component {
   };
 
   _moveStart: Function = (event: Object, position: number): void => {
-    event.preventDefault();
+    // event.preventDefault();
     event.stopPropagation();
     this.style = calculateStyle(styles, { ...this.state, ...{ active: true } }, this.props);
     this.currentPos = position;
