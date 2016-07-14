@@ -105,25 +105,29 @@ export default class RangeSlider extends Component {
   trackOffset: number;
 
   _setTrackDimensions: Function = (track: Object): void => {
-    const { orientation } = this.props;
-    const trackLength = orientation === 'vertical' ? track.clientHeight : track.clientWidth;
-    this.setState({
-      trackLength,
-    });
-    this.trackOffset = orientation === 'vertical' ?
-      track.offsetParent && track.offsetParent.offsetTop :
-      track.offsetParent && track.offsetParent.offsetLeft;
+    if (track) {
+      const { orientation } = this.props;
+      const trackLength = orientation === 'vertical' ? track.clientHeight : track.clientWidth;
+      this.setState({
+        trackLength,
+      });
+      this.trackOffset = orientation === 'vertical' ?
+        track.offsetParent && track.offsetParent.offsetTop :
+        track.offsetParent && track.offsetParent.offsetLeft;
+    }
   };
 
   _setHandleSize: Function = (handle): void => {
-    const { orientation } = this.props;
-    const handleSize = orientation === 'vertical' ?
-      handle.clientHeight :
-      handle.clientWidth;
-    if (!this.state.handleSize) {
-      this.setState({
-        handleSize,
-      });
+    if (handle) {
+      const { orientation } = this.props;
+      const handleSize = orientation === 'vertical' ?
+        handle.clientHeight :
+        handle.clientWidth;
+      if (!this.state.handleSize) {
+        this.setState({
+          handleSize,
+        });
+      }
     }
   };
 
