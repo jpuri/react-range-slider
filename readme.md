@@ -14,11 +14,10 @@ The component is easy to use. Import the library and add the component to your J
 
 ```
 import React from 'react';
-import styles from './styles.css';
 import Slider from 'range-sliders';
 
 const MyPage = () =>
-  <div className={ styles.container }>
+  <div>
     <Slider />
   </div>;
 ```
@@ -28,11 +27,10 @@ const MyPage = () =>
 An example of uncontrolled slider with single handle, defaultValue and step passed in props:
 ```
 import React from 'react';
-import styles from './styles.css';
 import RangeSlider from 'reactrangeslider';
 
 const MyPage = () =>
-  <div className={ styles.container }>
+  <div>
     <Slider defaultValue={20} step={ 5 } />
   </div>;
 ```
@@ -40,12 +38,11 @@ const MyPage = () =>
 An example of controlled range slider with two handles, value and step passed in props:
 ```
 import React from 'react';
-import styles from './styles.css';
 import RangeSlider from 'reactrangeslider';
 
 // value={ start: 20, end: 80 }
 const MyPage = (value, onChange) =>
-  <div className={ styles.container }>
+  <div>
     <RangeSlider
       value={ value }
       onChange={ onChange }
