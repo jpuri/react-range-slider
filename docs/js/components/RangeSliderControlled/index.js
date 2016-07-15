@@ -42,6 +42,7 @@ export default class SliderControlled extends Component {
             wrapperStyle={styles.slider}
             trackStyle={styles.trackStyle}
             highlightedTrackStyle={styles.highlightedTrackStyle}
+            highlightedTrackStyle2={styles.highlightedTrackStyle2}
             handleStyle={styles.handleStyle}
             hoveredHandleStyle={styles.hoveredHandleStyle}
             focusedHandleStyle={styles.focusedHandleStyle}
@@ -64,6 +65,7 @@ export default class SliderControlled extends Component {
                 'wrapperStyle={styles.slider}\n  ' +
                 'trackStyle={styles.trackStyle}\n  ' +
                 'highlightedTrackStyle={styles.highlightedTrackStyle}\n  ' +
+                'highlightedTrackClassName2={styles.sliderHighlightedTrack2}\n  ' +
                 'handleStyle={styles.handleStyle}\n  ' +
                 'hoveredHandleStyle={styles.hoveredHandleStyle}\n  ' +
                 'focusedHandleStyle={styles.focusedHandleStyle}\n  ' +
