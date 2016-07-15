@@ -57,6 +57,8 @@ export default class SliderDisabled extends Component {
                 'step={2}\n  ' +
                 'readOnly\n  ' +
                 'defaultValue={value}\n  ' +
+                'highlightedTrackClassName={styles.sliderHighlightedTrack}\n  ' +
+                'highlightedTrackClassName2={styles.sliderHighlightedTrack2}\n  ' +
                 'onChange={this.onChange}\n' +
               '/>'
             }

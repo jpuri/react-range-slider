@@ -50,6 +50,7 @@ export default class SliderUncontrolled extends Component {
             value={'<RangeSlider\n  step={2}\n  onChange={this.onChange}\n  ' +
             'wrapperClassName={styles.slider}\n  ' +
             'highlightedTrackClassName={styles.sliderHighlightedTrack}\n  ' +
+            'highlightedTrackClassName2={styles.sliderHighlightedTrack2}\n  ' +
             'trackClassName={styles.sliderTrack}\n  handleClassName={styles.sliderHandle}\n/>'}
             options={{
               lineNumbers: true,
