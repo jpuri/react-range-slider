@@ -42,6 +42,8 @@ export default class SliderDisabled extends Component {
             readOnly
             defaultValue={value}
             onChange={this.onChange}
+            highlightedTrackStyle={styles.highlightedTrackStyle}
+            highlightedTrackStyle2={styles.highlightedTrackStyle2}
           />
         </div>
         <div>

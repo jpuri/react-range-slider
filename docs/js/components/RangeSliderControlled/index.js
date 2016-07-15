@@ -42,6 +42,7 @@ export default class SliderControlled extends Component {
             wrapperStyle={styles.slider}
             trackStyle={styles.trackStyle}
             highlightedTrackStyle={styles.highlightedTrackStyle}
+            highlightedTrackStyle2={styles.highlightedTrackStyle2}
             handleStyle={styles.handleStyle}
             hoveredHandleStyle={styles.hoveredHandleStyle}
             focusedHandleStyle={styles.focusedHandleStyle}

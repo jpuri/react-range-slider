@@ -43,6 +43,7 @@ export default class RangeSlider extends Component {
     trackStyle: PropTypes.object,
     disabledTrackStyle: PropTypes.object,
     highlightedTrackStyle: PropTypes.object,
+    highlightedTrackStyle2: PropTypes.object,
     disabledHighlightedTrackStyle: PropTypes.object,
     handleStyle: PropTypes.object,
     focusedHandleStyle: PropTypes.object,
@@ -297,6 +298,7 @@ export default class RangeSlider extends Component {
       orientation,
       disabledTrackStyle,
       highlightedTrackStyle,
+      highlightedTrackStyle2,
       disabledHighlightedTrackStyle,
       handleStyle,
       focusedHandleStyle,
@@ -307,6 +309,7 @@ export default class RangeSlider extends Component {
       trackClassName,
       disabledTrackClassName,
       highlightedTrackClassName,
+      highlightedTrackClassName2,
       disabledHighlightedTrackClassName,
       handleClassName,
       disabledHandleClassName,
@@ -374,12 +377,12 @@ export default class RangeSlider extends Component {
         <HighlightedTrack
           disabled={disabled}
           orientation={orientation}
-          style={highlightedTrackStyle}
+          style={highlightedTrackStyle2}
           disabledStyle={disabledHighlightedTrackStyle}
-          className={highlightedTrackClassName}
+          className={highlightedTrackClassName2}
           offset={0}
           length={`${startValue * percentageFactor}%`}
-          className={highlightedTrackClassName}
+          className={highlightedTrackClassName2}
           disabledClassName={disabledHighlightedTrackClassName}
         />
         <Handle

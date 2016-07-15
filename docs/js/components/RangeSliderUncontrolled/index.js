@@ -37,6 +37,7 @@ export default class SliderUncontrolled extends Component {
             wrapperClassName={styles.slider}
             trackClassName={styles.sliderTrack}
             highlightedTrackClassName={styles.sliderHighlightedTrack}
+            highlightedTrackClassName2={styles.sliderHighlightedTrack2}
             handleClassName={styles.sliderHandle}
           />
         </div>
