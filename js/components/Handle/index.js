@@ -34,7 +34,7 @@ export default class Handle extends Component {
   };
 
   componentWillMount(): void {
-    injectStyle();
+    // injectStyle();
   }
 
   componentDidMount(): void {
@@ -53,7 +53,7 @@ export default class Handle extends Component {
   }
 
   componentWillUnmount(): void {
-    removeStyle();
+    // removeStyle();
   }
 
   _onMouseEnter: Function = (): void => {
@@ -83,15 +83,19 @@ export default class Handle extends Component {
 
   _onDocumentMouseMove: Function = (event: Object): void => {
     const { disabled, readOnly, orientation } = this.props;
-    if (!disabled && !readOnly && this.state.active) {
+    if (!disabled && !readOnly && (this.state.active || this.state.activeCount === 0)) {
       this._move(event, getMousePosition(event, orientation));
     }
+    this.setState({
+      activeCount: 1,
+    });
   };
 
-  _onDocumentMouseUp: Function = (): void => {
+  _onDocumentMouseUp: Function = (event): void => {
     const { disabled, readOnly } = this.props;
     if (!disabled && !readOnly && this.state.active) {
-      this._moveEnd();
+      this._move(event, getMousePosition(event, this.props.orientation));
+      this._moveEnd(event);
     }
   };
 
@@ -105,6 +109,7 @@ export default class Handle extends Component {
   _onTouchStart: Function = (event: Object): void => {
     const { disabled, readOnly, orientation } = this.props;
     if (!disabled && !readOnly && event.touches.length === 1) {
+      event.preventDefault();
       this._moveStart(event, getMousePosition(event.touches[0], orientation));
     }
   };
@@ -121,7 +126,8 @@ export default class Handle extends Component {
     if (!disabled && !readOnly && this.state.active) {
       event.stopPropagation();
       event.preventDefault();
-      this._moveEnd();
+      this._move(event, getMousePosition(event.touches[0], this.props.orientation));
+      this._moveEnd(event.touches[0]);
       this.props.afterChange();
     }
   };
@@ -165,6 +171,7 @@ export default class Handle extends Component {
     this.style = calculateStyle(styles, { ...this.state, ...{ active: false } }, this.props);
     this.setState({
       active: false,
+      activeCount: 0,
     });
   };
 

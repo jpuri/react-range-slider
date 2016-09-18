@@ -7,6 +7,7 @@ let styleElement;
 export function injectStyle(): void {
   if (canUseDOM && !styleElement) {
     styleElement = document.createElement('style');
+    styleElement.setAttribute('id', 'reactrangesliderid');
     document.body.appendChild(styleElement);
     styleElement.innerHTML = '.handle:focus { outline: none !important;}';
   }
@@ -14,7 +15,7 @@ export function injectStyle(): void {
 
 export function removeStyle(): void {
   if (canUseDOM && styleElement) {
-    document.body.removeChild(styleElement);
+    document.body.getElementById('reactrangesliderid');
   }
 }
 

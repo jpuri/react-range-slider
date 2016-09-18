@@ -194,7 +194,9 @@ export default class RangeSlider extends Component {
         let newStart = this._getStepValue(
           (mouseDownPosition - this.state.handleSize / 2) / this.factor);
         newStart = this._getStartValue(newStart);
-        if (newStart !== getValueOrAlt(start, min)) {
+        console.log('inhere 1', start, newStart)
+        if (start === undefined || newStart !== start) {
+          console.log('inhere')
           this._updateState(newStart, end);
           this._onChange(newStart, end);
           this._afterChange(newStart, end);
@@ -203,7 +205,7 @@ export default class RangeSlider extends Component {
         let newEnd = this._getStepValue(
           (mouseDownPosition - this.state.handleSize / 2) / this.factor);
         newEnd = this._getEndValue(newEnd);
-        if (newEnd !== getValueOrAlt(end, max)) {
+        if (end === undefined || newEnd !== end) {
           this._updateState(start, newEnd);
           this._onChange(start, newEnd);
           this._afterChange(start, newEnd);
