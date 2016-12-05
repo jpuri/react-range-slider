@@ -7,7 +7,6 @@ export default {
     width: 30,
     backgroundColor: '#2771e2',
     border: '1px solid #052350',
-    borderRadius: '50%',
     outline: 'none !important',
   },
   handleVertical: {
@@ -19,7 +18,7 @@ export default {
     left: 0,
     backgroundColor: '#2771e2',
     border: '1px solid #052350',
-    borderRadius: '50%',
+
     outline: 'none !important',
   },
   focusedHandle: {

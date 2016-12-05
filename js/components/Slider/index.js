@@ -89,25 +89,29 @@ export default class Slider extends Component {
   value: number;
 
   _setTrackDimensions: Function = (track: Object): void => {
-    const { orientation } = this.props;
-    const trackLength = orientation === 'vertical' ? track.clientHeight : track.clientWidth;
-    this.setState({
-      trackLength,
-    });
-    this.trackOffset = orientation === 'vertical' ?
-      track.offsetParent && track.offsetParent.offsetTop :
-      track.offsetParent && track.offsetParent.offsetLeft;
+    if (track) {
+      const { orientation } = this.props;
+      const trackLength = orientation === 'vertical' ? track.clientHeight : track.clientWidth;
+      this.setState({
+        trackLength,
+      });
+      this.trackOffset = orientation === 'vertical' ?
+        track.offsetParent && track.offsetParent.offsetTop :
+        track.offsetParent && track.offsetParent.offsetLeft;
+    }
   };
 
   _setHandleSize: Function = (handle): void => {
-    const { orientation } = this.props;
-    const hendleSize = orientation === 'vertical' ?
+    if (handle) {
+      const { orientation } = this.props;
+      const hendleSize = orientation === 'vertical' ?
       handle.clientHeight :
       handle.clientWidth;
-    if (!this.state.hendleSize) {
-      this.setState({
-        hendleSize,
-      });
+      if (!this.state.hendleSize) {
+        this.setState({
+          hendleSize,
+        });
+      }
     }
   };
 
