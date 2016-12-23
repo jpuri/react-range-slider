@@ -13,9 +13,9 @@ export function injectStyle(): void {
 }
 
 export function removeStyle(): void {
-  if (canUseDOM && styleElement) {
-    document.body.removeChild(styleElement);
-  }
+  // if (canUseDOM && styleElement) {
+  //   document.body.removeChild(styleElement);
+  // }
 }
 
 export function calculateStyle(styles: Object, state: Object, props: Object): Object {

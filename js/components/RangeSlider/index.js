@@ -371,7 +371,7 @@ export default class RangeSlider extends Component {
           disabledStyle={disabledHighlightedTrackStyle}
           className={highlightedTrackClassName}
           offset={0}
-          length={`${(endValue) * percentageFactor}%`}
+          length={`${(startValue) * percentageFactor}%`}
           disabledClassName={disabledHighlightedTrackClassName}
         />
         <HighlightedTrack
@@ -381,7 +381,7 @@ export default class RangeSlider extends Component {
           disabledStyle={disabledHighlightedTrackStyle}
           className={highlightedTrackClassName2}
           offset={0}
-          length={`${(startValue) * percentageFactor}%`}
+          length={`${startValue * percentageFactor}%`}
           disabledClassName={disabledHighlightedTrackClassName}
         />
         <Handle
