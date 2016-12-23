@@ -47,6 +47,12 @@ export default {
     backgroundColor: 'grey',
     top: 14,
   },
+  highlightedTrackStyle2: {
+    height: 5,
+    border: '3px solid black',
+    backgroundColor: 'red',
+    top: 14,
+  },
   handleStyle: {
     height: 30,
     width: 30,
