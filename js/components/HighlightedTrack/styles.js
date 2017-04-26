@@ -4,7 +4,7 @@ export default {
     width: '100%',
     top: 13,
     height: 4,
-    backgroundColor: '#99c1ff',
+    backgroundColor: '#00FA9A',
 
   },
   highlightedTrackVertical: {
