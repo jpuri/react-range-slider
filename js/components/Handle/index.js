@@ -231,7 +231,7 @@ export default class Handle extends Component {
         className={
           (disabled && disabledClassName) ?
           `handle ${disabledClassName}` :
-          `handle ${className}`
+          `handle ${className || ''}`
         }
         onFocus={this._onFocus}
         onBlur={this._onBlur}

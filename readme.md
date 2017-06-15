@@ -1,6 +1,6 @@
 # React Sliders
 
-An collection of elegant slider components for React.
+A collection of elegant slider components for React.
 [Demo Page](http://jpuri.github.io/react-range-slider/).
 
 ## Installing
@@ -9,12 +9,12 @@ The library is available as npm package.
 
 `npm install reactrangeslider`
 
-## Using The component
+## Using the component
 The component is easy to use. Import the library and add the component to your JSX:
 
 ```jsx
 import React from 'react';
-import Slider from 'range-sliders';
+import {Slider} from 'range-sliders';
 
 const MyPage = () =>
   <div>
@@ -27,7 +27,7 @@ const MyPage = () =>
 An example of uncontrolled slider with single handle, `defaultValue` and `step` passed in props:
 ```jsx
 import React from 'react';
-import RangeSlider from 'reactrangeslider';
+import {RangeSlider} from 'reactrangeslider';
 
 const MyPage = () =>
   <div>
@@ -38,7 +38,7 @@ const MyPage = () =>
 An example of controlled range slider with two handles, `value` and `step` passed in props:
 ```jsx
 import React from 'react';
-import RangeSlider from 'reactrangeslider';
+import {RangeSlider} from 'reactrangeslider';
 
 // value={ start: 20, end: 80 }
 const MyPage = (value, onChange) =>
@@ -92,9 +92,9 @@ If inline styles are used for styling, the inline styles passed to it will overr
 | ------ | ----------- |
 | `wrapperClassName`    | class applied to wrapper div element |
 | `handleClassName` / `disabledHandleClassName`   | either of these classes is applied to the handle depending on whether its enabled or disabled |
-| `trackClassName` / `highlightedTrackClassName`    | either of these classes is applied to the track depending on whether its enabled or disabled |
+| `trackClassName` / `disabledTrackClassName`    | either of these classes is applied to the track depending on whether its enabled or disabled |
 | `highlightedTrackClassName` / `disabledHighlightedTrackClassName`    | either of these classes is applied to the highlighted handle depending on whether its enabled or disabled |
-Styles applied to highlighted track are applicable only to Reage Slider with two handles and highlighted area between them.
+Styles applied to highlighted track are applicable only to Range Slider with two handles and highlighted area between them.
 
 ## Device support
 Range Slider is responsive to different sizes and resolutions. Its responsive to mouse, keyboard and touch events.
