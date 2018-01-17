@@ -2,6 +2,7 @@
 
 import React, { Component, PropTypes } from 'react';
 import Track from '../Track';
+import HighlightedTrack from '../HighlightedTrack';
 import Handle from '../Handle';
 import styles from './styles';
 import {
@@ -24,6 +25,7 @@ export default class Slider extends Component {
     step: stepValidator,
     value: valueValidator,
     defaultValue: defaultValueValidator,
+    highlightTrack : PropTypes.bool,
     tabIndex: PropTypes.number,
     onChange: PropTypes.func,
     afterChange: PropTypes.func,
@@ -34,11 +36,15 @@ export default class Slider extends Component {
     wrapperClassName: PropTypes.string,
     trackClassName: PropTypes.string,
     disabledTrackClassName: PropTypes.string,
+    highlightedTrackClassName: PropTypes.string,
+    disabledHighlightedTrackClassName: PropTypes.string,
     handleClassName: PropTypes.string,
     disabledHandleClassName: PropTypes.string,
     wrapperStyle: PropTypes.object,
     trackStyle: PropTypes.object,
     disabledTrackStyle: PropTypes.object,
+    highlightedTrackStyle: PropTypes.object,
+    disabledHighlightedTrackStyle: PropTypes.object,
     handleStyle: PropTypes.object,
     focusedHandleStyle: PropTypes.object,
     hoveredHandleStyle: PropTypes.object,
@@ -234,7 +240,10 @@ export default class Slider extends Component {
       readOnly,
       trackStyle,
       orientation,
+      highlightTrack,
       disabledTrackStyle,
+      highlightedTrackStyle,
+      disabledHighlightedTrackStyle,
       handleStyle,
       focusedHandleStyle,
       hoveredHandleStyle,
@@ -243,6 +252,8 @@ export default class Slider extends Component {
       wrapperClassName,
       trackClassName,
       disabledTrackClassName,
+      highlightedTrackClassName,
+      disabledHighlightedTrackClassName,
       handleClassName,
       disabledHandleClassName,
     } = this.props;
@@ -286,6 +297,17 @@ export default class Slider extends Component {
           className={trackClassName}
           disabledClassName={disabledTrackClassName}
         />
+        {highlightTrack?<HighlightedTrack
+          disabled={disabled}
+          orientation={orientation}
+          style={highlightedTrackStyle}
+          disabledStyle={disabledHighlightedTrackStyle}
+          className={highlightedTrackClassName}
+          offset={0}
+          length={`${(endValue - startValue) * percentageFactor}%`}
+          className={highlightedTrackClassName}
+          disabledClassName={disabledHighlightedTrackClassName}
+        />:null}
         <Handle
           disabled={disabled}
           offset={`${position * percentageFactor}%`}
