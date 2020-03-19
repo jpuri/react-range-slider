@@ -27,18 +27,18 @@ const MyPage = () =>
 An example of uncontrolled slider with single handle, `defaultValue` and `step` passed in props:
 ```jsx
 import React from 'react';
-import RangeSlider from 'reactrangeslider';
+import { RangeSlider } from 'reactrangeslider';
 
 const MyPage = () =>
   <div>
-    <Slider defaultValue={20} step={ 5 } />
+    <RangeSlider defaultValue={20} step={ 5 } />
   </div>;
 ```
 
 An example of controlled range slider with two handles, `value` and `step` passed in props:
 ```jsx
 import React from 'react';
-import RangeSlider from 'reactrangeslider';
+import { RangeSlider } from 'reactrangeslider';
 
 // value={ start: 20, end: 80 }
 const MyPage = (value, onChange) =>
