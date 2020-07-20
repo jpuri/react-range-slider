@@ -134,6 +134,7 @@ export default class RangeSlider extends Component {
   _startHandleMove: Function = (increase: number): void => {
     const { disabled, readOnly, step, min } = this.props;
     const { start } = this.state;
+    console.log('in start handle move');
     if (!disabled && !readOnly) {
       const newStart = this._getStartValue(getValueOrAlt(start, min) + increase * step);
       if (newStart !== start) {
@@ -146,6 +147,7 @@ export default class RangeSlider extends Component {
   _endHandleMove: Function = (increase: number): void => {
     const { disabled, readOnly, step, max } = this.props;
     const { end } = this.state;
+    console.log('in end handle move');
     if (!disabled && !readOnly) {
       const newEnd = this._getEndValue(getValueOrAlt(end, max) + increase * step);
       if (newEnd !== end) {
@@ -169,8 +171,8 @@ export default class RangeSlider extends Component {
         event.preventDefault();
         this._moveHandleToPosition(
           orientation === 'vertical' ?
-          event.touches[0].pageY :
-          event.touches[0].pageX
+            event.touches[0].pageY :
+            event.touches[0].pageX
         );
       }
     }
@@ -189,12 +191,15 @@ export default class RangeSlider extends Component {
       } else {
         mouseDownPosition = position - this.trackOffset + (min * this.factor);
       }
+
       if (Math.abs(mouseDownPosition - startPosition) < Math.abs(mouseDownPosition - endPosition) ||
         mouseDownPosition < startPosition) {
         let newStart = this._getStepValue(
           (mouseDownPosition - this.state.handleSize / 2) / this.factor);
         newStart = this._getStartValue(newStart);
+        console.log('inhere 1', start, newStart);
         if (start === undefined || newStart !== start) {
+          console.log('inhere');
           this._updateState(newStart, end);
           this._onChange(newStart, end);
           this._afterChange(newStart, end);
